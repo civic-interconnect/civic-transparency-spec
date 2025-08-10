@@ -3,8 +3,8 @@
 > **Verified Provenance & Behavior Transparency Standard**  
 > An open, nonpartisan specification for privacy-preserving visibility into how content spreads online.
 
-- [GitHub Source Repository](https://github.com/civic-interconnect/ct-spec)
-- [Hosted Documentation](https://civic-interconnect.github.io/ct-spec/)
+- [GitHub Source Repository](https://github.com/civic-interconnect/civic-transparency-spec)
+- [Hosted Documentation](https://civic-interconnect.github.io/civic-transparency-spec/)
 
 Official documentation for the Civic Transparency project.
 

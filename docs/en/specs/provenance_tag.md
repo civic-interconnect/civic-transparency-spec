@@ -3,7 +3,7 @@
 > **Status:** Human-readable overview.  
 > **Normative definition:** See the JSON Schema at  
 > `spec/schemas/provenance_tag.schema.json`  
-> (`$id: https://civic-interconnect.github.io/ct-spec/en/spec/schemas/provenance_tag.schema.json`)
+> (`$id: https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/provenance_tag.schema.json`)
 
 Added to public posts (stored server-side for aggregate queries; not shown per-user unless a platform chooses to).
 

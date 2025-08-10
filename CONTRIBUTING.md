@@ -87,7 +87,7 @@ Remove-Item -Recurse -Force temp_wheel
 mkdocs serve
 ```
 
-Open browser to <http://localhost:8000/ct-spec/> to view the site.
+Open browser to <http://localhost:8000/civic-transparency-spec/> to view the site.
 
 ## Making Changes
 

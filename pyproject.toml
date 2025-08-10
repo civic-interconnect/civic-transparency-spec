@@ -7,8 +7,8 @@ name = "civic-transparency-spec"
 dynamic = ["version"]
 description = "Civic Transparency specification schemas (JSON Schema Draft-07)"
 readme = "README.md"
-license = { file = "LICENSE.txt" }
-requires-python = ">=3.10"
+license = { file = "LICENSE" }
+requires-python = ">=3.11"
 authors = [{ name = "Civic Interconnect" }]
 keywords = ["civic", "transparency", "jsonschema", "specification"]
 classifiers = [

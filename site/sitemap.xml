@@ -1,117 +1,117 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <url>
-        <loc>https://civic-interconnect.github.io/ct-spec/</loc>
+        <loc>https://civic-interconnect.github.io/civic-transparency-spec/</loc>
         <lastmod>2025-08-10</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/ct-spec/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/civic-transparency-spec/"/>
     </url>
     <url>
-        <loc>https://civic-interconnect.github.io/ct-spec/docs/all/</loc>
+        <loc>https://civic-interconnect.github.io/civic-transparency-spec/docs/all/</loc>
         <lastmod>2025-08-10</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/ct-spec/docs/all/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/civic-transparency-spec/docs/all/"/>
     </url>
     <url>
-        <loc>https://civic-interconnect.github.io/ct-spec/docs/glossary/</loc>
+        <loc>https://civic-interconnect.github.io/civic-transparency-spec/docs/glossary/</loc>
         <lastmod>2025-08-10</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/ct-spec/docs/glossary/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/civic-transparency-spec/docs/glossary/"/>
     </url>
     <url>
-        <loc>https://civic-interconnect.github.io/ct-spec/docs/governance/</loc>
+        <loc>https://civic-interconnect.github.io/civic-transparency-spec/docs/governance/</loc>
         <lastmod>2025-08-10</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/ct-spec/docs/governance/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/civic-transparency-spec/docs/governance/"/>
     </url>
     <url>
-        <loc>https://civic-interconnect.github.io/ct-spec/docs/metrics/</loc>
+        <loc>https://civic-interconnect.github.io/civic-transparency-spec/docs/metrics/</loc>
         <lastmod>2025-08-10</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/ct-spec/docs/metrics/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/civic-transparency-spec/docs/metrics/"/>
     </url>
     <url>
-        <loc>https://civic-interconnect.github.io/ct-spec/docs/privacy/</loc>
+        <loc>https://civic-interconnect.github.io/civic-transparency-spec/docs/privacy/</loc>
         <lastmod>2025-08-10</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/ct-spec/docs/privacy/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/civic-transparency-spec/docs/privacy/"/>
     </url>
     <url>
-        <loc>https://civic-interconnect.github.io/ct-spec/docs/survey/</loc>
+        <loc>https://civic-interconnect.github.io/civic-transparency-spec/docs/survey/</loc>
         <lastmod>2025-08-10</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/ct-spec/docs/survey/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/civic-transparency-spec/docs/survey/"/>
     </url>
     <url>
-        <loc>https://civic-interconnect.github.io/ct-spec/docs/cwe/</loc>
+        <loc>https://civic-interconnect.github.io/civic-transparency-spec/docs/cwe/</loc>
         <lastmod>2025-08-10</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/ct-spec/docs/cwe/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/civic-transparency-spec/docs/cwe/"/>
     </url>
     <url>
-        <loc>https://civic-interconnect.github.io/ct-spec/docs/cwe/CWE-T001/</loc>
+        <loc>https://civic-interconnect.github.io/civic-transparency-spec/docs/cwe/CWE-T001/</loc>
         <lastmod>2025-08-10</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/ct-spec/docs/cwe/CWE-T001/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/civic-transparency-spec/docs/cwe/CWE-T001/"/>
     </url>
     <url>
-        <loc>https://civic-interconnect.github.io/ct-spec/docs/cwe/CWE-T002/</loc>
+        <loc>https://civic-interconnect.github.io/civic-transparency-spec/docs/cwe/CWE-T002/</loc>
         <lastmod>2025-08-10</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/ct-spec/docs/cwe/CWE-T002/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/civic-transparency-spec/docs/cwe/CWE-T002/"/>
     </url>
     <url>
-        <loc>https://civic-interconnect.github.io/ct-spec/docs/cwe/CWE-T003/</loc>
+        <loc>https://civic-interconnect.github.io/civic-transparency-spec/docs/cwe/CWE-T003/</loc>
         <lastmod>2025-08-10</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/ct-spec/docs/cwe/CWE-T003/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/civic-transparency-spec/docs/cwe/CWE-T003/"/>
     </url>
     <url>
-        <loc>https://civic-interconnect.github.io/ct-spec/docs/cwe/CWE-T004/</loc>
+        <loc>https://civic-interconnect.github.io/civic-transparency-spec/docs/cwe/CWE-T004/</loc>
         <lastmod>2025-08-10</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/ct-spec/docs/cwe/CWE-T004/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/civic-transparency-spec/docs/cwe/CWE-T004/"/>
     </url>
     <url>
-        <loc>https://civic-interconnect.github.io/ct-spec/docs/cwe/CWE-T005/</loc>
+        <loc>https://civic-interconnect.github.io/civic-transparency-spec/docs/cwe/CWE-T005/</loc>
         <lastmod>2025-08-10</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/ct-spec/docs/cwe/CWE-T005/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/civic-transparency-spec/docs/cwe/CWE-T005/"/>
     </url>
     <url>
-        <loc>https://civic-interconnect.github.io/ct-spec/docs/cwe/CWE-T006/</loc>
+        <loc>https://civic-interconnect.github.io/civic-transparency-spec/docs/cwe/CWE-T006/</loc>
         <lastmod>2025-08-10</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/ct-spec/docs/cwe/CWE-T006/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/civic-transparency-spec/docs/cwe/CWE-T006/"/>
     </url>
     <url>
-        <loc>https://civic-interconnect.github.io/ct-spec/docs/cwe/CWE-T007/</loc>
+        <loc>https://civic-interconnect.github.io/civic-transparency-spec/docs/cwe/CWE-T007/</loc>
         <lastmod>2025-08-10</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/ct-spec/docs/cwe/CWE-T007/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/civic-transparency-spec/docs/cwe/CWE-T007/"/>
     </url>
     <url>
-        <loc>https://civic-interconnect.github.io/ct-spec/docs/cwe/CWE-T008/</loc>
+        <loc>https://civic-interconnect.github.io/civic-transparency-spec/docs/cwe/CWE-T008/</loc>
         <lastmod>2025-08-10</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/ct-spec/docs/cwe/CWE-T008/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/civic-transparency-spec/docs/cwe/CWE-T008/"/>
     </url>
     <url>
-        <loc>https://civic-interconnect.github.io/ct-spec/specs/provenance_tag/</loc>
+        <loc>https://civic-interconnect.github.io/civic-transparency-spec/specs/provenance_tag/</loc>
         <lastmod>2025-08-10</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/ct-spec/specs/provenance_tag/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/civic-transparency-spec/specs/provenance_tag/"/>
     </url>
     <url>
-        <loc>https://civic-interconnect.github.io/ct-spec/specs/schema_index/</loc>
+        <loc>https://civic-interconnect.github.io/civic-transparency-spec/specs/schema_index/</loc>
         <lastmod>2025-08-10</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/ct-spec/specs/schema_index/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/civic-transparency-spec/specs/schema_index/"/>
     </url>
     <url>
-        <loc>https://civic-interconnect.github.io/ct-spec/specs/transparency_api/</loc>
+        <loc>https://civic-interconnect.github.io/civic-transparency-spec/specs/transparency_api/</loc>
         <lastmod>2025-08-10</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/ct-spec/specs/transparency_api/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://civic-interconnect.github.io/civic-transparency-spec/specs/transparency_api/"/>
     </url>
 </urlset>

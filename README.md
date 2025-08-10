@@ -1,8 +1,10 @@
 # Civic Transparency – Specifications
 
-[![Python 3.11](https://img.shields.io/badge/python-3.11-blue?logo=python)](#)
-[![CI Status](https://github.com/civic-interconnect/civic-transparency-spec/actions/workflows/ci.yml/badge.svg)](https://github.com/civic-interconnect/civic-transparency-spec/actions/workflows/ci.yml)
 [![Docs](https://img.shields.io/badge/docs-mkdocs--material-blue)](https://civic-interconnect.github.io/civic-transparency-spec/)
+[![PyPI](https://img.shields.io/pypi/v/civic-transparency-spec.svg)](https://pypi.org/project/civic-transparency-spec/)
+[![Python 3.11](https://img.shields.io/badge/python-3.11-blue?logo=python)](#)
+[![CI Status](https://github.com/civic-interconnect/civic-transparency-spec/actions/workflows/ci.yml/badge.svg?branch=main
+)](https://github.com/civic-interconnect/civic-transparency-spec/actions/workflows/ci.yml)
 [![JSON Schema: Draft-07](https://img.shields.io/badge/JSON%20Schema-Draft--07-orange)](#)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 

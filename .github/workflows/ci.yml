@@ -1,9 +1,12 @@
+# .github/workflows/ci.yml
+# This workflow runs on every push and pull request to the main branch.
 name: Civic Transparency Spec CI
 
 on:
   push:
     branches: [ main ]
   pull_request:
+  workflow_dispatch:
 
 jobs:
   ci:

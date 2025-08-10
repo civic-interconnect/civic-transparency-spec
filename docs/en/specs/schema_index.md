@@ -15,19 +15,19 @@ The schema design emphasizes:
 ## JSON Schema (Draft-07)
 
 - **SeriesDoc**  
-  `$id`: `https://civic-interconnect.github.io/ct-spec/en/spec/schemas/series.schema.json`  
+  `$id`: `https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/series.schema.json`  
   File: `spec/schemas/series.schema.json`
 
 - **MetaDoc**  
-  `$id`: `https://civic-interconnect.github.io/ct-spec/en/spec/schemas/meta.schema.json`  
+  `$id`: `https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/meta.schema.json`  
   File: `spec/schemas/meta.schema.json`
 
 - **RunDoc**  
-  `$id`: `https://civic-interconnect.github.io/ct-spec/en/spec/schemas/run.schema.json`  
+  `$id`: `https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/run.schema.json`  
   File: `spec/schemas/run.schema.json`
 
 - **Provenance Tag**  
-  `$id`: `https://civic-interconnect.github.io/ct-spec/en/spec/schemas/provenance_tag.schema.json`  
+  `$id`: `https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/provenance_tag.schema.json`  
   File: `spec/schemas/provenance_tag.schema.json`
 
 ## OpenAPI (HTTP Interface)
