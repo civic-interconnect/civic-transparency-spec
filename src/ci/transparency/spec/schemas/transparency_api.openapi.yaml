@@ -80,7 +80,7 @@ paths:
             application/json:
               # Normative schema (SeriesDoc)
               schema:
-                $ref: "https://civic-interconnect.github.io/ct-spec/en/spec/schemas/series.schema.json"
+                $ref: "https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/series.schema.json"
               examples:
                 example:
                   summary: Minimal example (shape only; values illustrative)

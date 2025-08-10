@@ -1,5 +1,5 @@
 {
-  "$id": "https://civic-interconnect.github.io/ct-spec/en/spec/schemas/run.schema.json",
+  "$id": "https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/run.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "RunDoc",
   "type": "object",

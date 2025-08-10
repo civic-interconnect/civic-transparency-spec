@@ -129,6 +129,7 @@ Open browser to <http://localhost:8000/civic-transparency-spec/> to view the sit
 2. Ensure all CI checks pass.
 3. Build & verify package locally
 4. Tag a new release using `git tag vx.y.z` and `git push origin vx.y.z`.
+5. Create a GitHub release.
 
 ```shell
 # Make sure everything is committed
@@ -139,6 +140,11 @@ git push
 # Example Tag and push (setuptools_scm will use this)
 git tag vx.y.z
 git push origin vx.y.z
+
+gh release create vx.y.z --title "vx.y.z" --notes "Patch: update_description_here. See CHANGELOG."
+
+# Attach build artifacts
+gh release upload vx.y.z dist/*
 ```
 
 ## GitHub Actions will publish to PyPI and deploy versioned docs.

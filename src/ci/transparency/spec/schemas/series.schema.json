@@ -1,5 +1,5 @@
 {
-  "$id": "https://civic-interconnect.github.io/ct-spec/en/spec/schemas/series.schema.json",
+  "$id": "https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/series.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "SeriesDoc",
   "type": "object",
@@ -34,17 +34,17 @@
 
           "acct_age_mix": {
             "type": "object",
-            "propertyNames": { "$ref": "https://civic-interconnect.github.io/ct-spec/en/spec/schemas/provenance_tag.schema.json#/$defs/AcctAge" },
+            "propertyNames": { "$ref": "https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/provenance_tag.schema.json#/$defs/AcctAge" },
             "additionalProperties": { "type": "number", "minimum": 0.0, "maximum": 1.0 }
           },
           "automation_mix": {
             "type": "object",
-            "propertyNames": { "$ref": "https://civic-interconnect.github.io/ct-spec/en/spec/schemas/provenance_tag.schema.json#/$defs/AutomationFlag" },
+            "propertyNames": { "$ref": "https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/provenance_tag.schema.json#/$defs/AutomationFlag" },
             "additionalProperties": { "type": "number", "minimum": 0.0, "maximum": 1.0 }
           },
           "client_mix": {
             "type": "object",
-            "propertyNames": { "$ref": "https://civic-interconnect.github.io/ct-spec/en/spec/schemas/provenance_tag.schema.json#/$defs/ClientFamily" },
+            "propertyNames": { "$ref": "https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/provenance_tag.schema.json#/$defs/ClientFamily" },
             "additionalProperties": { "type": "number", "minimum": 0.0, "maximum": 1.0 }
           },
 

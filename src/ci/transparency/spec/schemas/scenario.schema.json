@@ -1,5 +1,5 @@
 {
-  "$id": "https://civic-interconnect.github.io/ct-spec/en/spec/schemas/scenario.schema.json",
+  "$id": "https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/scenario.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "ScenarioYaml",
   "type": "object",
@@ -48,14 +48,14 @@
           "acct_type": {
             "description": "Declared account type.",
             "allOf": [
-              { "$ref": "https://civic-interconnect.github.io/ct-spec/en/spec/schemas/provenance_tag.schema.json#/$defs/AcctType" }
+              { "$ref": "https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/provenance_tag.schema.json#/$defs/AcctType" }
             ]
           },
 
           "automation_flag": {
             "description": "Posting method / automation status.",
             "allOf": [
-              { "$ref": "https://civic-interconnect.github.io/ct-spec/en/spec/schemas/provenance_tag.schema.json#/$defs/AutomationFlag" }
+              { "$ref": "https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/provenance_tag.schema.json#/$defs/AutomationFlag" }
             ]
           },
 
@@ -82,7 +82,7 @@
             "type": "object",
             "description": "Weights (non-negative) by client family; consumers may normalize.",
             "propertyNames": {
-              "$ref": "https://civic-interconnect.github.io/ct-spec/en/spec/schemas/provenance_tag.schema.json#/$defs/ClientFamily"
+              "$ref": "https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/provenance_tag.schema.json#/$defs/ClientFamily"
             },
             "additionalProperties": { "type": "number", "minimum": 0.0 }
           }
