@@ -2,18 +2,56 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/provenance_tag.schema.json",
   "title": "Provenance Tag",
-  "description": "Schema for per-post provenance tags in the Civic Transparency standard. All values are bucketed or categorical — no PII.",
+  "description": "Per-post provenance tags in the Civic Transparency standard. Values are bucketed/categorical—no PII or direct identifiers.",
   "$defs": {
-    "AcctAge": { "enum": ["0-7d", "8-30d", "1-6m", "6-24m", "24m+"] },
-    "AcctType": { "enum": ["person", "org", "media", "public_official", "unverified", "declared_automation"] },
-    "AutomationFlag": { "enum": ["manual", "scheduled", "api_client", "declared_bot"] },
-    "PostKind": { "enum": ["original", "reshare", "quote", "reply"] },
-    "ClientFamily": { "enum": ["web", "mobile", "third_party_api"] }
+    "AcctAge": {
+      "type": "string",
+      "enum": ["0-7d", "8-30d", "1-6m", "6-24m", "24m+"]
+    },
+    "AcctType": {
+      "type": "string",
+      "enum": [
+        "person",
+        "org",
+        "media",
+        "public_official",
+        "unverified",
+        "declared_automation"
+      ]
+    },
+    "AutomationFlag": {
+      "type": "string",
+      "enum": ["manual", "scheduled", "api_client", "declared_bot"]
+    },
+    "PostKind": {
+      "type": "string",
+      "enum": ["original", "reshare", "quote", "reply"]
+    },
+    "ClientFamily": {
+      "type": "string",
+      "enum": ["web", "mobile", "third_party_api"]
+    },
+    "MediaProvenance": {
+      "type": "string",
+      "enum": ["c2pa_present", "hash_only", "none"]
+    },
+    "ISO3166CountryOrSubdivision": {
+      "type": "string",
+      "description": "Uppercase ISO-3166-1 alpha-2 country code, optionally with ISO-3166-2 subdivision (e.g., US or US-CA).",
+      "pattern": "^[A-Z]{2}(-[A-Z]{2})?$"
+    },
+    "HexHash8to64": {
+      "type": "string",
+      "description": "Lowercase hex, 8–64 chars (rolling hash identifier for identical media/text content).",
+      "pattern": "^[a-f0-9]{8,64}$",
+      "minLength": 8,
+      "maxLength": 64
+    }
   },
   "type": "object",
   "properties": {
     "acct_age_bucket": {
-      "description": "Broad range representing the account’s creation date relative to the post time.",
+      "description": "Account age bucket relative to post time.",
       "allOf": [{ "$ref": "#/$defs/AcctAge" }]
     },
     "acct_type": {
@@ -21,7 +59,7 @@
       "allOf": [{ "$ref": "#/$defs/AcctType" }]
     },
     "automation_flag": {
-      "description": "Indicates the automation status or posting method.",
+      "description": "Automation status or posting method.",
       "allOf": [{ "$ref": "#/$defs/AutomationFlag" }]
     },
     "post_kind": {
@@ -33,19 +71,16 @@
       "allOf": [{ "$ref": "#/$defs/ClientFamily" }]
     },
     "media_provenance": {
-      "type": "string",
       "description": "Level of media provenance information attached.",
-      "enum": ["c2pa_present", "hash_only", "none"]
+      "allOf": [{ "$ref": "#/$defs/MediaProvenance" }]
     },
     "origin_hint": {
-      "type": "string",
-      "description": "Broad location bucket where content was first observed, if lawful.",
-      "pattern": "^[A-Z]{2}(-[A-Z]{2})?$"
+      "description": "Broad location bucket where content was first observed (if lawful).",
+      "allOf": [{ "$ref": "#/$defs/ISO3166CountryOrSubdivision" }]
     },
     "dedup_hash": {
-      "type": "string",
-      "description": "Rolling hash identifier for identical media/text content.",
-      "pattern": "^[a-f0-9]{8,64}$"
+      "description": "Rolling hash identifier used to detect recycled/duplicate content.",
+      "allOf": [{ "$ref": "#/$defs/HexHash8to64" }]
     }
   },
   "required": [
@@ -57,5 +92,17 @@
     "media_provenance",
     "dedup_hash"
   ],
-  "additionalProperties": false
+  "additionalProperties": false,
+  "examples": [
+    {
+      "acct_age_bucket": "0-7d",
+      "acct_type": "person",
+      "automation_flag": "api_client",
+      "post_kind": "reshare",
+      "client_family": "mobile",
+      "media_provenance": "hash_only",
+      "origin_hint": "US-CA",
+      "dedup_hash": "9a4b2c1d"
+    }
+  ]
 }

@@ -13,6 +13,8 @@
 > Civic Transparency is an open specification for privacy-preserving, non-partisan visibility into how content spreads online.
 > It defines machine-readable provenance tags and aggregated behavioral metrics that platforms can expose via a low-cost API, enabling journalists, watchdogs, and civic groups to detect coordination patterns and automation without exposing personal data or judging content.
 
+> Maintained by **[Civic Interconnect](https://github.com/civic-interconnect)**.
+
 - [Documentation](https://civic-interconnect.github.io/civic-transparency-spec/)
 - [Schemas](./specs/schema_index.md)
 - [Contributing](./CONTRIBUTING.md)
@@ -81,3 +83,10 @@ See: [Transparency API](https://civic-interconnect.github.io/civic-transparency-
 - Target Python: **3.11** (CI runs on 3.11).
 - Schemas: **JSON Schema Draft-07**; OpenAPI: **3.1**.
 - This repo is a **specification**; the primary artifacts are schemas + documentation.
+
+---
+
+## About
+
+Civic Transparency is an open specification for privacy-preserving, non-partisan visibility into **how** content spreads online (not what it says). 
+ 

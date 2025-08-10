@@ -2,34 +2,62 @@
   "$id": "https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/scenario.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "ScenarioYaml",
-  "type": "object",
-  "required": ["topic", "window", "personas"],
-  "properties": {
-    "topic": { "type": "string" },
-
-    "threat_type": {
-      "anyOf": [
-        { "type": "string", "enum": ["benign", "malicious", "mixed"] },
-        { "type": "null" }
-      ]
-    },
-    "threat_notes": { "type": ["string", "null"] },
-
-    "window": {
+  "description": "Input scenario used to drive simulations or aggregation runs: topic, window, personas, and optional events.",
+  "$defs": {
+    "Window": {
       "type": "object",
+      "description": "Inclusive UTC time window for the scenario.",
       "required": ["start", "end"],
       "properties": {
-        "start": { "type": "string", "format": "date-time" },
-        "end": { "type": "string", "format": "date-time" }
+        "start": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Window start (UTC, ISO 8601)."
+        },
+        "end": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Window end (UTC, ISO 8601)."
+        }
       },
       "additionalProperties": false
     },
+    "EventKind": { "type": "string", "enum": ["burst", "synchrony_wave"] },
+    "ThreatType": {
+      "type": "string",
+      "enum": ["benign", "malicious", "mixed"]
+    },
+    "Probability": { "type": "number", "minimum": 0.0, "maximum": 1.0 }
+  },
+  "type": "object",
+  "required": ["topic", "window", "personas"],
+  "properties": {
+    "topic": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human-readable topic key (e.g., hashtag) for this scenario."
+    },
 
-    "notes": { "type": ["string", "null"] },
+    "threat_type": {
+      "anyOf": [{ "$ref": "#/$defs/ThreatType" }, { "type": "null" }],
+      "description": "Optional qualitative label for the scenario."
+    },
+    "threat_notes": {
+      "type": ["string", "null"],
+      "description": "Optional free-text notes supporting the threat_type label."
+    },
+
+    "window": { "$ref": "#/$defs/Window" },
+
+    "notes": {
+      "type": ["string", "null"],
+      "description": "Optional free-form notes."
+    },
 
     "personas": {
       "type": "array",
       "minItems": 1,
+      "description": "One or more persona groups contributing activity to the scenario.",
       "items": {
         "type": "object",
         "required": [
@@ -42,47 +70,70 @@
           "acct_age_days"
         ],
         "properties": {
-          "name": { "type": "string" },
-          "count": { "type": "integer", "minimum": 1 },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Persona label for reporting/debugging."
+          },
+
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Number of accounts represented by this persona."
+          },
 
           "acct_type": {
             "description": "Declared account type.",
             "allOf": [
-              { "$ref": "https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/provenance_tag.schema.json#/$defs/AcctType" }
+              { "$ref": "./provenance_tag.schema.json#/$defs/AcctType" }
             ]
           },
 
           "automation_flag": {
             "description": "Posting method / automation status.",
             "allOf": [
-              { "$ref": "https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/provenance_tag.schema.json#/$defs/AutomationFlag" }
+              { "$ref": "./provenance_tag.schema.json#/$defs/AutomationFlag" }
             ]
           },
 
-          "post_rate_per_hour": { "type": "number", "minimum": 0.0 },
+          "post_rate_per_hour": {
+            "type": "number",
+            "minimum": 0.0,
+            "description": "Average posts per hour per account (non-negative)."
+          },
 
           "active_hours": {
             "type": "array",
+            "description": "Active hours-of-day in UTC (0–23). Unique values only.",
             "items": { "type": "integer", "minimum": 0, "maximum": 23 },
-            "uniqueItems": true
+            "uniqueItems": true,
+            "minItems": 1,
+            "maxItems": 24
           },
 
           "acct_age_days": {
             "type": "array",
+            "description": "Two integers: [min_days, max_days].",
             "items": { "type": "integer", "minimum": 0 },
             "minItems": 2,
-            "maxItems": 2,
-            "description": "Two integers: [min_days, max_days]."
+            "maxItems": 2
           },
 
-          "reshare_prob": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
-          "c2pa_prob": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+          "reshare_prob": {
+            "allOf": [{ "$ref": "#/$defs/Probability" }],
+            "description": "Probability that a post is a reshare."
+          },
+          "c2pa_prob": {
+            "allOf": [{ "$ref": "#/$defs/Probability" }],
+            "description": "Probability that attached media carries C2PA."
+          },
 
           "client_family_weights": {
             "type": "object",
             "description": "Weights (non-negative) by client family; consumers may normalize.",
+            "minProperties": 1,
             "propertyNames": {
-              "$ref": "https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/provenance_tag.schema.json#/$defs/ClientFamily"
+              "$ref": "./provenance_tag.schema.json#/$defs/ClientFamily"
             },
             "additionalProperties": { "type": "number", "minimum": 0.0 }
           }
@@ -93,20 +144,90 @@
 
     "events": {
       "type": "array",
+      "description": "Optional list of events to inject or expect during the window.",
       "items": {
         "type": "object",
         "required": ["kind"],
         "properties": {
-          "kind": { "type": "string", "enum": ["burst", "synchrony_wave"] },
-          "start": { "type": "string", "format": "date-time" },
-          "end": { "type": "string", "format": "date-time" },
-          "center": { "type": "string", "format": "date-time" },
-          "span_minutes": { "type": "integer", "minimum": 1 },
-          "participation_rate": { "type": "number", "minimum": 0.0, "maximum": 1.0 }
+          "kind": {
+            "allOf": [{ "$ref": "#/$defs/EventKind" }],
+            "description": "Event category."
+          },
+          "start": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Event start (UTC, ISO 8601)."
+          },
+          "end": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Event end (UTC, ISO 8601)."
+          },
+          "center": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Event center/peak (UTC, ISO 8601)."
+          },
+          "span_minutes": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Event duration span in minutes."
+          },
+          "participation_rate": {
+            "allOf": [{ "$ref": "#/$defs/Probability" }],
+            "description": "Fraction of persona population participating."
+          }
         },
         "additionalProperties": false
       }
     }
   },
-  "additionalProperties": false
+  "additionalProperties": false,
+  "examples": [
+    {
+      "topic": "#CityElection2026",
+      "window": {
+        "start": "2026-02-01T00:00:00Z",
+        "end": "2026-02-07T00:00:00Z"
+      },
+      "notes": "Pilot scenario for pre-primary window.",
+      "threat_type": "mixed",
+      "personas": [
+        {
+          "name": "Civic volunteers",
+          "count": 1200,
+          "acct_type": "person",
+          "automation_flag": "manual",
+          "post_rate_per_hour": 0.2,
+          "active_hours": [7, 8, 12, 18, 19, 20, 21],
+          "acct_age_days": [180, 3650],
+          "reshare_prob": 0.35,
+          "c2pa_prob": 0.05,
+          "client_family_weights": { "mobile": 0.7, "web": 0.3 }
+        },
+        {
+          "name": "Campaign comms",
+          "count": 60,
+          "acct_type": "org",
+          "automation_flag": "scheduled",
+          "post_rate_per_hour": 1.1,
+          "active_hours": [9, 10, 11, 12, 13, 14, 15, 16, 17],
+          "acct_age_days": [30, 3650],
+          "reshare_prob": 0.15,
+          "c2pa_prob": 0.2,
+          "client_family_weights": { "web": 0.6, "third_party_api": 0.4 }
+        }
+      ],
+      "events": [
+        {
+          "kind": "burst",
+          "start": "2026-02-03T11:55:00Z",
+          "end": "2026-02-03T12:20:00Z",
+          "center": "2026-02-03T12:05:00Z",
+          "span_minutes": 25,
+          "participation_rate": 0.5
+        }
+      ]
+    }
+  ]
 }

@@ -1,86 +1,55 @@
 # transparency_api.openapi.yaml
-# This file is part of the Civic Transparency API specification.
 openapi: 3.1.0
 info:
   title: Civic Transparency API
-  version: "0.0.1"
+  version: "0.1.0"
   summary: Aggregated, privacy-preserving behavior signals for a topic/time window.
   description: |
     This OpenAPI file is **normative** for the HTTP interface. Response bodies
     are defined by JSON Schemas under `spec/schemas/` and must validate against
     the referenced schema(s).
-
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+externalDocs:
+  description: Project documentation
+  url: https://civic-interconnect.github.io/civic-transparency-spec/
 servers:
   - url: https://api.example.org
     description: Reference implementation (example)
 
+tags:
+  - name: transparency
+    description: Aggregated behavioral transparency endpoints.
+
 paths:
   /transparency/v1/aggregate:
     get:
+      tags: [transparency]
       operationId: getAggregateSeries
       summary: Get aggregated behavior series for a topic
       description: |
-        Returns an aggregated time series of behavior-only metrics (no content, no IDs)
+        Returns an aggregated time series of behavior-only metrics (**no content, no IDs**)
         for a given topic within a requested time window. Responses **must** satisfy
         k-anonymity (e.g., k ≥ 100) and validate against the SeriesDoc schema.
-
       parameters:
-        - name: topic
-          in: query
-          required: true
-          description: Hashtag or topic key (URL-encoded if it contains '#').
-          schema:
-            type: string
-            minLength: 1
-
-        - name: window_start
-          in: query
-          required: true
-          description: Start of the query window (ISO 8601, UTC).
-          schema:
-            type: string
-            format: date-time
-
-        - name: window_end
-          in: query
-          required: true
-          description: End of the query window (ISO 8601, UTC).
-          schema:
-            type: string
-            format: date-time
-
-        - name: granularity
-          in: query
-          required: true
-          description: Aggregation interval. Current reference implementation supports `minute`.
-          schema:
-            type: string
-            enum: [minute]
-
+        - $ref: "#/components/parameters/topic"
+        - $ref: "#/components/parameters/window_start"
+        - $ref: "#/components/parameters/window_end"
+        - $ref: "#/components/parameters/granularity"
       responses:
         "200":
           description: Aggregated behavior series (privacy-preserving).
           headers:
-            X-Window-Start:
-              description: Effective start of the response window (may be clipped/cached).
-              schema: { type: string, format: date-time }
-            X-Window-End:
-              description: Effective end of the response window (may be clipped/cached).
-              schema: { type: string, format: date-time }
-            X-RateLimit-Limit:
-              description: The maximum number of requests you're permitted to make per time window.
-              schema: { type: integer, minimum: 1 }
-            X-RateLimit-Remaining:
-              description: The number of requests remaining in the current rate limit window.
-              schema: { type: integer, minimum: 0 }
-            X-RateLimit-Reset:
-              description: UTC epoch seconds when the current rate limit window resets.
-              schema: { type: integer, minimum: 0 }
+            X-Window-Start: { $ref: "#/components/headers/X-Window-Start" }
+            X-Window-End: { $ref: "#/components/headers/X-Window-End" }
+            X-RateLimit-Limit: { $ref: "#/components/headers/X-RateLimit-Limit" }
+            X-RateLimit-Remaining: { $ref: "#/components/headers/X-RateLimit-Remaining" }
+            X-RateLimit-Reset: { $ref: "#/components/headers/X-RateLimit-Reset" }
           content:
             application/json:
-              # Normative schema (SeriesDoc)
               schema:
-                $ref: "https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/series.schema.json"
+                $ref: "#/components/schemas/SeriesDoc"
               examples:
                 example:
                   summary: Minimal example (shape only; values illustrative)
@@ -100,50 +69,95 @@ paths:
                           burst_score: 0.87
                           synchrony_index: 0.74
                           duplication_clusters: 11
-
         "400":
           description: Bad request (invalid parameters or window).
           content:
             application/json:
-              schema:
-                type: object
-                additionalProperties: false
-                properties:
-                  error: { type: string }
-                  detail: { type: string }
+              schema: { $ref: "#/components/schemas/ErrorResponse" }
               examples:
                 invalidWindow:
-                  value:
-                    error: "invalid_window"
-                    detail: "window_start must be before window_end"
-
+                  value: { error: "invalid_window", detail: "window_start must be before window_end" }
         "429":
           description: Rate limit exceeded.
           headers:
-            Retry-After:
-              description: Seconds until a new request is permitted.
-              schema: { type: integer, minimum: 1 }
+            Retry-After: { $ref: "#/components/headers/Retry-After" }
           content:
             application/json:
-              schema:
-                type: object
-                additionalProperties: false
-                properties:
-                  error: { type: string }
-                  detail: { type: string }
+              schema: { $ref: "#/components/schemas/ErrorResponse" }
               examples:
                 rateLimited:
-                  value:
-                    error: "rate_limited"
-                    detail: "Too many requests; try again later."
-
+                  value: { error: "rate_limited", detail: "Too many requests; try again later." }
         "500":
           description: Internal server error.
           content:
             application/json:
-              schema:
-                type: object
-                additionalProperties: false
-                properties:
-                  error: { type: string }
-                  detail: { type: string }
+              schema: { $ref: "#/components/schemas/ErrorResponse" }
+
+components:
+  parameters:
+    topic:
+      name: topic
+      in: query
+      required: true
+      description: Hashtag or topic key (URL-encoded if it contains '#').
+      schema:
+        type: string
+        minLength: 1
+    window_start:
+      name: window_start
+      in: query
+      required: true
+      description: Start of the query window (ISO 8601, UTC).
+      schema:
+        type: string
+        format: date-time
+    window_end:
+      name: window_end
+      in: query
+      required: true
+      description: End of the query window (ISO 8601, UTC).
+      schema:
+        type: string
+        format: date-time
+    granularity:
+      name: granularity
+      in: query
+      required: true
+      description: Aggregation interval. Current reference implementation supports `minute`.
+      schema:
+        type: string
+        enum: [minute]
+
+  headers:
+    X-Window-Start:
+      description: Effective start of the response window (may be clipped/cached).
+      schema: { type: string, format: date-time }
+    X-Window-End:
+      description: Effective end of the response window (may be clipped/cached).
+      schema: { type: string, format: date-time }
+    X-RateLimit-Limit:
+      description: The maximum number of requests you're permitted to make per time window.
+      schema: { type: integer, minimum: 1 }
+    X-RateLimit-Remaining:
+      description: The number of requests remaining in the current rate limit window.
+      schema: { type: integer, minimum: 0 }
+    X-RateLimit-Reset:
+      description: UTC epoch seconds when the current rate limit window resets.
+      schema: { type: integer, minimum: 0 }
+    Retry-After:
+      description: Seconds until a new request is permitted.
+      schema: { type: integer, minimum: 1 }
+
+  schemas:
+    # Use local relative ref so CI never fetches over network.
+    SeriesDoc:
+      $ref: "./series.schema.json"
+      x-canonical-schema: "https://civic-interconnect.github.io/civic-transparency-spec/latest/en/spec/schemas/series.schema.json"
+
+    ErrorResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        error: { type: string }
+        detail: { type: string }
+      required: [error]

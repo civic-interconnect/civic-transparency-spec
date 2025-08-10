@@ -2,6 +2,33 @@
   "$id": "https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/meta.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "MetaDoc",
+  "description": "Run-level metadata describing how a Series document (and related artifacts) was produced.",
+  "$defs": {
+    "Window": {
+      "type": "object",
+      "description": "Inclusive time window (UTC) used for generation.",
+      "required": ["start", "end"],
+      "properties": {
+        "start": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Window start (UTC, ISO 8601)."
+        },
+        "end": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Window end (UTC, ISO 8601)."
+        }
+      },
+      "additionalProperties": false
+    },
+    "EventKind": { "type": "string", "enum": ["burst", "synchrony_wave"] },
+    "ThreatType": {
+      "type": "string",
+      "enum": ["benign", "malicious", "mixed"]
+    },
+    "Sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+  },
   "type": "object",
   "required": [
     "topic",
@@ -16,49 +43,121 @@
     "events"
   ],
   "properties": {
-    "topic": { "type": "string" },
-
-    "window": {
-      "type": "object",
-      "required": ["start", "end"],
-      "properties": {
-        "start": { "type": "string", "format": "date-time" },
-        "end": { "type": "string", "format": "date-time" }
-      },
-      "additionalProperties": false
+    "topic": {
+      "type": "string",
+      "description": "Human-readable topic key (e.g., hashtag) used for this run."
     },
 
-    "notes": { "type": "string" },
-    "seed": { "type": "integer" },
-    "accounts_generated": { "type": "integer", "minimum": 0 },
-    "posts_raw": { "type": "integer", "minimum": 0 },
-    "buckets_aggregated": { "type": "integer", "minimum": 0 },
-    "scenario_file": { "type": "string" },
-    "scenario_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "window": { "$ref": "#/$defs/Window" },
+
+    "notes": {
+      "type": ["string", "null"],
+      "description": "Free-form notes about this run (nullable)."
+    },
+
+    "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "PRNG seed used to make the run reproducible (non-negative)."
+    },
+
+    "accounts_generated": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Count of synthetic or sampled accounts involved in generation."
+    },
+    "posts_raw": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Raw post count considered before bucketing/aggregation."
+    },
+    "buckets_aggregated": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of (time × category) buckets aggregated."
+    },
+
+    "scenario_file": {
+      "type": "string",
+      "description": "Path or URI to the scenario definition used for this run.",
+      "pattern": "^.+\\.(ya?ml)$"
+    },
+
+    "scenario_sha256": {
+      "$ref": "#/$defs/Sha256",
+      "description": "SHA-256 of the scenario file content (hex, lowercase)."
+    },
 
     "events": {
       "type": "array",
+      "description": "Detected or injected events that characterize the run window.",
+      "minItems": 1,
       "items": {
         "type": "object",
         "required": ["kind"],
         "properties": {
-          "kind": { "type": "string", "enum": ["burst", "synchrony_wave"] },
-          "start": { "type": "string", "format": "date-time" },
-          "end": { "type": "string", "format": "date-time" },
-          "center": { "type": "string", "format": "date-time" },
-          "span_minutes": { "type": "integer", "minimum": 1 }
+          "kind": { "$ref": "#/$defs/EventKind" },
+          "start": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Event start (UTC, ISO 8601)."
+          },
+          "end": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Event end (UTC, ISO 8601)."
+          },
+          "center": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Event center/peak (UTC, ISO 8601)."
+          },
+          "span_minutes": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Event duration span in minutes."
+          }
         },
         "additionalProperties": false
       }
     },
 
     "threat_type": {
-      "anyOf": [
-        { "type": "string", "enum": ["benign", "malicious", "mixed"] },
-        { "type": "null" }
-      ]
+      "anyOf": [{ "$ref": "#/$defs/ThreatType" }, { "type": "null" }],
+      "description": "Optional qualitative label for the scenario/run."
     },
-    "threat_notes": { "type": ["string", "null"] }
+
+    "threat_notes": {
+      "type": ["string", "null"],
+      "description": "Optional notes supporting the threat_type label."
+    }
   },
-  "additionalProperties": false
+  "additionalProperties": false,
+  "examples": [
+    {
+      "topic": "#CityElection2026",
+      "window": {
+        "start": "2026-02-01T00:00:00Z",
+        "end": "2026-02-07T00:00:00Z"
+      },
+      "notes": "Simulated week before primary.",
+      "seed": 42,
+      "accounts_generated": 15000,
+      "posts_raw": 184230,
+      "buckets_aggregated": 10080,
+      "scenario_file": "scenarios/city_primary.yaml",
+      "scenario_sha256": "7b7f8a2c9d4f0ce2c41a8e80a4a6f2f3f1b0e9d8c7b6a5d4c3b2a19080706050",
+      "events": [
+        {
+          "kind": "burst",
+          "start": "2026-02-03T11:55:00Z",
+          "end": "2026-02-03T12:20:00Z",
+          "center": "2026-02-03T12:05:00Z",
+          "span_minutes": 25
+        }
+      ],
+      "threat_type": "mixed",
+      "threat_notes": "Coordinated resharing mixed with organic reaction."
+    }
+  ]
 }

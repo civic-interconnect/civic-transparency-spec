@@ -2,19 +2,116 @@
   "$id": "https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/run.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "RunDoc",
-  "type": "object",
-  "required": ["run_id","sim_version","python_version","platform","host","libs"],
-  "properties": {
-    "run_id": { "type": "string", "format": "uuid" },
-    "git_commit": { "type": "string" },
-    "sim_version": { "type": "string" },
-    "python_version": { "type": "string" },
-    "platform": { "type": "string" },
-    "host": { "type": "string" },
-    "libs": {
-      "type": "object",
-      "additionalProperties": { "type": "string" }
+  "description": "Environment and build metadata captured at generation time (useful for provenance, debugging, and reproducibility).",
+  "$defs": {
+    "SemVer": {
+      "type": "string",
+      "description": "Semantic version (lenient). Examples: 0.0.5, 1.2.3-alpha.1+build.9",
+      "pattern": "^\\d+\\.\\d+\\.\\d+(?:[-+][A-Za-z0-9.-]+)?$"
+    },
+    "GitSha": {
+      "type": "string",
+      "description": "Git commit SHA (short or full). Lowercase hex.",
+      "pattern": "^[0-9a-f]{7,40}$"
+    },
+    "PyVersion": {
+      "type": "string",
+      "description": "Python version (PEP 440-ish). Examples: 3.11.9, 3.10.14",
+      "pattern": "^\\d+\\.\\d+(?:\\.\\d+)?(?:[A-Za-z0-9.+-]+)?$"
+    },
+    "Hostname": {
+      "type": "string",
+      "description": "RFC 1123-ish hostname pattern (simple).",
+      "pattern": "^[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?(?:\\.[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)*$"
+    },
+    "PkgName": {
+      "type": "string",
+      "description": "PEP 503 normalized name (lowercase; -, _, . allowed as separators).",
+      "pattern": "^[a-z0-9]+(?:[._-][a-z0-9]+)*$"
     }
   },
-  "additionalProperties": false
+  "type": "object",
+  "required": [
+    "run_id",
+    "sim_version",
+    "python_version",
+    "platform",
+    "host",
+    "libs"
+  ],
+  "properties": {
+    "run_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique ID for this generation run."
+    },
+
+    "git_commit": {
+      "anyOf": [{ "$ref": "#/$defs/GitSha" }, { "type": "null" }],
+      "description": "Associated Git commit SHA, if available."
+    },
+
+    "sim_version": {
+      "anyOf": [{ "$ref": "#/$defs/SemVer" }, { "type": "string" }],
+      "description": "Version of the simulator/tooling producing outputs."
+    },
+
+    "python_version": {
+      "allOf": [{ "$ref": "#/$defs/PyVersion" }],
+      "description": "Python runtime version."
+    },
+
+    "platform": {
+      "type": "string",
+      "description": "Platform identifier (e.g., sys.platform, OS/arch combo)."
+    },
+
+    "host": {
+      "allOf": [{ "$ref": "#/$defs/Hostname" }],
+      "description": "Hostname of the machine (if captured)."
+    },
+
+    "executed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp the run started or completed (UTC, ISO 8601).",
+      "examples": ["2026-02-07T00:00:00Z"]
+    },
+
+    "libs": {
+      "type": "object",
+      "description": "Dependency versions used in this run (keys are package names; values are version strings).",
+      "minProperties": 1,
+      "propertyNames": { "$ref": "#/$defs/PkgName" },
+      "additionalProperties": {
+        "type": "string",
+        "description": "Package version (PEP 440 string).",
+        "minLength": 1
+      },
+      "examples": [
+        {
+          "pydantic": "2.7.0",
+          "jsonschema": "4.22.0",
+          "numpy": "2.0.1"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "run_id": "6b6bb9b1-2e2d-43c0-8b3a-4f3d4f7b9c2e",
+      "git_commit": "7a214c9",
+      "sim_version": "0.0.5",
+      "python_version": "3.11.9",
+      "platform": "linux-x86_64",
+      "host": "runner-xyz.ci.example",
+      "executed_at": "2026-02-07T00:00:00Z",
+      "libs": {
+        "pydantic": "2.7.0",
+        "jsonschema": "4.22.0",
+        "numpy": "2.0.1"
+      }
+    }
+  ]
 }

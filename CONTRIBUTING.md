@@ -126,10 +126,11 @@ Open browser to <http://localhost:8000/civic-transparency-spec/> to view the sit
 ## Release process (lightweight)
 
 1. Update `CHANGELOG.md` with notable changes.
-2. Ensure all CI checks pass.
-3. Build & verify package locally
-4. Tag a new release using `git tag vx.y.z` and `git push origin vx.y.z`.
-5. Create a GitHub release.
+2. Update `src/ci/transparency/spec/schemas/transparency_api.openapi.yaml` with the coming version.
+3. Ensure all CI checks pass.
+4. Build & verify package locally
+5. Tag a new release using `git tag vx.y.z` and `git push origin vx.y.z`.
+6. Create a GitHub release.
 
 ```shell
 # Make sure everything is committed

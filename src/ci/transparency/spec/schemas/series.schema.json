@@ -2,14 +2,32 @@
   "$id": "https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/series.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "SeriesDoc",
+  "description": "Aggregated, privacy-preserving behavior series for a topic over time.",
+  "$defs": {
+    "Probability": { "type": "number", "minimum": 0.0, "maximum": 1.0 }
+  },
   "type": "object",
   "required": ["topic", "generated_at", "interval", "points"],
   "properties": {
-    "topic": { "type": "string" },
-    "generated_at": { "type": "string", "format": "date-time" },
-    "interval": { "type": "string", "enum": ["minute"] },
+    "topic": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Topic key (e.g., hashtag) this series describes."
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC timestamp when this series was generated (ISO 8601)."
+    },
+    "interval": {
+      "type": "string",
+      "enum": ["minute"],
+      "description": "Aggregation interval."
+    },
     "points": {
       "type": "array",
+      "description": "Time-ordered list of per-interval aggregates.",
+      "minItems": 1,
       "items": {
         "type": "object",
         "required": [
@@ -26,35 +44,80 @@
           "ts": {
             "type": "string",
             "format": "date-time",
-            "description": "UTC minute boundary"
+            "description": "UTC minute boundary for this point (ISO 8601)."
           },
-          "volume": { "type": "integer", "minimum": 0 },
-          "reshare_ratio": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
-          "recycled_content_rate": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+          "volume": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Total posts observed in this interval."
+          },
+          "reshare_ratio": {
+            "allOf": [{ "$ref": "#/$defs/Probability" }],
+            "description": "Fraction of posts that are reshares in this interval."
+          },
+          "recycled_content_rate": {
+            "allOf": [{ "$ref": "#/$defs/Probability" }],
+            "description": "Estimated fraction of posts that recycle prior content (hash/duplicate-based)."
+          },
 
           "acct_age_mix": {
             "type": "object",
-            "propertyNames": { "$ref": "https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/provenance_tag.schema.json#/$defs/AcctAge" },
-            "additionalProperties": { "type": "number", "minimum": 0.0, "maximum": 1.0 }
+            "description": "Distribution over account-age buckets; values typically sum to ~1.0.",
+            "minProperties": 1,
+            "propertyNames": {
+              "$ref": "./provenance_tag.schema.json#/$defs/AcctAge"
+            },
+            "additionalProperties": {
+              "allOf": [{ "$ref": "#/$defs/Probability" }]
+            }
           },
+
           "automation_mix": {
             "type": "object",
-            "propertyNames": { "$ref": "https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/provenance_tag.schema.json#/$defs/AutomationFlag" },
-            "additionalProperties": { "type": "number", "minimum": 0.0, "maximum": 1.0 }
+            "description": "Distribution over automation flags; values typically sum to ~1.0.",
+            "minProperties": 1,
+            "propertyNames": {
+              "$ref": "./provenance_tag.schema.json#/$defs/AutomationFlag"
+            },
+            "additionalProperties": {
+              "allOf": [{ "$ref": "#/$defs/Probability" }]
+            }
           },
+
           "client_mix": {
             "type": "object",
-            "propertyNames": { "$ref": "https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/provenance_tag.schema.json#/$defs/ClientFamily" },
-            "additionalProperties": { "type": "number", "minimum": 0.0, "maximum": 1.0 }
+            "description": "Distribution over client families; values typically sum to ~1.0.",
+            "minProperties": 1,
+            "propertyNames": {
+              "$ref": "./provenance_tag.schema.json#/$defs/ClientFamily"
+            },
+            "additionalProperties": {
+              "allOf": [{ "$ref": "#/$defs/Probability" }]
+            }
           },
 
           "coordination_signals": {
             "type": "object",
-            "required": ["burst_score", "synchrony_index", "duplication_clusters"],
+            "description": "Per-interval coordination indicators.",
+            "required": [
+              "burst_score",
+              "synchrony_index",
+              "duplication_clusters"
+            ],
             "properties": {
-              "burst_score": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
-              "synchrony_index": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
-              "duplication_clusters": { "type": "integer", "minimum": 0 }
+              "burst_score": {
+                "allOf": [{ "$ref": "#/$defs/Probability" }],
+                "description": "Burstiness indicator (0-1)."
+              },
+              "synchrony_index": {
+                "allOf": [{ "$ref": "#/$defs/Probability" }],
+                "description": "Temporal synchrony indicator (0-1)."
+              },
+              "duplication_clusters": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Count of duplicate/near-duplicate content clusters."
+              }
             },
             "additionalProperties": false
           }
@@ -63,5 +126,43 @@
       }
     }
   },
-  "additionalProperties": false
+  "additionalProperties": false,
+  "examples": [
+    {
+      "topic": "#CityElection2026",
+      "generated_at": "2026-02-07T00:00:00Z",
+      "interval": "minute",
+      "points": [
+        {
+          "ts": "2026-02-03T12:00:00Z",
+          "volume": 18423,
+          "reshare_ratio": 0.93,
+          "recycled_content_rate": 0.28,
+          "acct_age_mix": {
+            "0-7d": 0.22,
+            "8-30d": 0.11,
+            "1-6m": 0.19,
+            "6-24m": 0.17,
+            "24m+": 0.31
+          },
+          "automation_mix": {
+            "manual": 0.71,
+            "scheduled": 0.14,
+            "api_client": 0.11,
+            "declared_bot": 0.04
+          },
+          "client_mix": {
+            "web": 0.47,
+            "mobile": 0.41,
+            "third_party_api": 0.12
+          },
+          "coordination_signals": {
+            "burst_score": 0.87,
+            "synchrony_index": 0.74,
+            "duplication_clusters": 11
+          }
+        }
+      ]
+    }
+  ]
 }
