@@ -1,3 +1,4 @@
+# .github/workflows/release.yml
 name: CT Spec Release (PyPI + versioned docs)
 
 on:
@@ -7,8 +8,7 @@ on:
 
 permissions:
   contents: read
-  id-token: write  # required for PyPI Trusted Publishing
-  pages: write     # for GH Pages via mike
+  id-token: write   # PyPI Trusted Publishing
 
 jobs:
   build-and-publish:
@@ -24,16 +24,24 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install build deps
+      - name: Install build tooling
         run: |
-          pip install --upgrade pip
+          python -m pip install --upgrade pip
           pip install build
-
-      # If your package includes JSON schemas, be sure they’re in the sdist/wheel.
-      # This assumes MANIFEST.in and pyproject are configured (see notes below).
 
       - name: Build sdist + wheel
         run: python -m build
+
+      - name: (Sanity) List artifacts
+        run: |
+          python - << 'PY'
+          import zipfile, glob, os
+          print("Dist files:", os.listdir("dist"))
+          for whl in glob.glob("dist/*.whl"):
+              with zipfile.ZipFile(whl) as z:
+                  schemas = [n for n in z.namelist() if n.endswith(".schema.json")]
+                  print("Schemas in wheel:", whl, "->", schemas)
+          PY
 
       - name: Publish to PyPI (Trusted Publishing)
         uses: pypa/gh-action-pypi-publish@release/v1
@@ -41,18 +49,39 @@ jobs:
   docs:
     needs: build-and-publish
     runs-on: ubuntu-latest
+    permissions:
+      contents: write    # <-- allow mike to push to gh-pages
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout with full history
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@v5
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Install MkDocs + Mike
-        run: pip install -r requirements.txt
+
+      - name: Install docs deps (from extras)
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[docs]"
+
+      - name: Configure git for mike
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Ensure gh-pages branch exists locally
+        run: |
+          git fetch origin gh-pages:gh-pages || true
+
+      - name: Build docs (fail fast)
+        run: mkdocs build
+
       - name: Deploy versioned docs with Mike
         env:
-          TAG: ${{ github.ref_name }}         # e.g., v0.4.0
+          TAG: ${{ github.ref_name }}   # e.g., v0.0.1
         run: |
-          # Use the tag as the docs version; also update 'latest' alias
-          mike deploy --push --update-aliases latest "$TAG"
+          VERSION="${TAG#v}"            # 0.0.1
+          mike deploy --push --update-aliases latest "$VERSION"

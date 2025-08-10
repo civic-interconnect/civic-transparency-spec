@@ -130,6 +130,17 @@ Open browser to <http://localhost:8000/ct-spec/> to view the site.
 3. Build & verify package locally
 4. Tag a new release using `git tag vx.y.z` and `git push origin vx.y.z`.
 
+```shell
+# Make sure everything is committed
+git add -A
+git commit -m "Prep release v0.0.2"   # if needed
+git push
+
+# Example Tag and push (setuptools_scm will use this)
+git tag v0.0.2
+git push origin v0.0.2
+```
+
 ## GitHub Actions will publish to PyPI and deploy versioned docs.
 
 ## Questions / Support

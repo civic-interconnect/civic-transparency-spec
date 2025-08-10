@@ -36,24 +36,25 @@ docs = [
   "mkdocs-minify-plugin",
   "mike",
 ]
-test = [
+test = ["pytest", "pytest-cov"]
+lint = ["ruff"]
+build = ["build"]
+validate = ["jsonschema", "openapi-spec-validator"]
+
+dev = [
+  "mkdocs",
+  "mkdocs-material",
+  "mkdocs-static-i18n",
+  "mkdocs-include-markdown-plugin",
+  "mkdocs-git-revision-date-localized-plugin",
+  "mkdocs-minify-plugin",
+  "mike",
   "pytest",
   "pytest-cov",
-]
-lint = [
   "ruff",
-]
-build = [
   "build",
-]
-validate = [
   "jsonschema",
-  "openapi-spec-validator",
-]
-
-# Grab all dev tooling at once
-dev = [
-  "civic-transparency-spec[docs,test,lint,build,release,validate]"
+  "openapi-spec-validator"
 ]
 
 [tool.setuptools]

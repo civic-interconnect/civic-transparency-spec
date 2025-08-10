@@ -1,43 +1,61 @@
-# .github/workflows/ci.yml
 name: Civic Transparency Spec CI
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
 
 jobs:
   ci:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install Dependencies
-        run: pip install -r requirements.txt
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('pyproject.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
 
-      # Linting with Ruff
-      - name: Lint with Ruff
+      - name: Install dev deps (extras)
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      # Lint
+      - name: Ruff lint
         run: ruff check .
 
-      # Validate Schemas (using Python)
+      # Validate schemas & OpenAPI (keep your scripts or switch to pytest)
       - name: Validate JSON Schemas (Draft-07)
         run: python .github/scripts/validate_schemas.py
+
       - name: Validate OpenAPI
         run: python .github/scripts/validate_open_api.py
 
-      # Run Tests
-      - name: Run Tests
-        run: pytest --cov --cov-report=xml
-      - name: Codecov Upload
+      # Tests + coverage
+      - name: Run tests
+        run: pytest -q --cov --cov-report=xml
+
+      - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         with:
           files: ./coverage.xml
           fail_ci_if_error: false
-          
-      # Build Documentation (sanity check)
-      - name: Build Docs (Sanity Check)
+          # If uploads fail, add:
+          # token: ${{ secrets.CODECOV_TOKEN }}
+
+      # Build docs (sanity check only; no deploy here)
+      - name: Build docs
         run: mkdocs build

@@ -1,31 +1,32 @@
 # .github/workflows/deploy-docs.yml
-name: Deploy CT Spec Docs with Mike
+name: Deploy CT Spec Docs (latest from main)
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      pages: write
-      id-token: write
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Mike requires full history
-
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-
-      - name: Install MkDocs and Mike
-        run: pip install -r requirements.txt
-
-      - name: Deploy Docs with Mike
+      - name: Install MkDocs + Mike (from extras)
         run: |
-          # The branch name will become the version alias (e.g., 'main' -> 'latest')
-          # To use a version number, you'd extract it from a tag or other source
-          mike deploy --push --update-aliases latest ${{ github.ref_name }}
+          python -m pip install --upgrade pip
+          pip install -e ".[docs]"
+      - name: Configure git for mike
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Build docs (fail fast)
+        run: mkdocs build
+      - name: Deploy Docs with Mike (latest alias only)
+        run: |
+          mike deploy --push --update-aliases latest main
