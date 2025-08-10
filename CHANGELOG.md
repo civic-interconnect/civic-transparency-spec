@@ -13,6 +13,14 @@ and this project adheres to **[Semantic Versioning](https://semver.org/spec/v2.0
 
 ---
 
+## [0.0.6] - 2025-08-10
+
+### Fixed
+
+- **CI:** Updated URLs in schema json files.
+ 
+---
+
 ## [0.0.5] - 2025-08-10
 
 ### Fixed
