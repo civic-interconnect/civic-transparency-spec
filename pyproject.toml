@@ -33,7 +33,6 @@ docs = [
   "mkdocs-static-i18n",
   "mkdocs-include-markdown-plugin",
   "mkdocs-git-revision-date-localized-plugin",
-  "mkdocs-with-pdf",
   "mkdocs-minify-plugin",
   "mike",
 ]

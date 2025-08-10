@@ -47,7 +47,8 @@ py -3.11 -m venv .venv
 
 # Install tools (use **python3** for Mac/Linux/WSL)
 py -m pip install --upgrade pip setuptools wheel
-py -m pip install --upgrade -e .[dev]
+py -m pip install --upgrade -e ".[dev]"
+pre-commit install
 ```
 
 ### Validating Changes

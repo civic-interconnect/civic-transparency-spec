@@ -5,6 +5,8 @@ site_url: https://civic-interconnect.github.io/ct-spec/
 
 theme:
   name: material
+  features:
+    - content.footer
   language: en
   favicon: img/favicon.png
   palette:
@@ -23,7 +25,7 @@ theme:
 nav:
 - Home: index.md
 - Docs:
-  - Background: docs/background.md
+  - All-in-One: docs/all.md
   - Glossary: docs/glossary.md
   - Governance: docs/governance.md
   - Metrics: docs/metrics.md
@@ -48,6 +50,9 @@ docs_dir: docs/en
 
 plugins:
   - search
+  - include-markdown
+  - minify:
+      minify_html: true
   - i18n:
       docs_structure: folder
       languages:
@@ -55,7 +60,11 @@ plugins:
           default: true
           name: English
           build: true
-
+  - git-revision-date-localized:
+      type: iso_date
+      fallback_to_build_date: true
+      enable_creation_date: false
+      
 markdown_extensions:
 - admonition
 - codehilite
