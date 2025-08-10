@@ -7,17 +7,15 @@ name = "civic-transparency-spec"
 dynamic = ["version"]
 description = "Civic Transparency specification schemas (JSON Schema Draft-07)"
 readme = "README.md"
-license = { file = "LICENSE" }
+license = "MIT"
 requires-python = ">=3.11"
 authors = [{ name = "Civic Interconnect" }]
 keywords = ["civic", "transparency", "jsonschema", "specification"]
 classifiers = [
   "Programming Language :: Python :: 3",
-  "License :: OSI Approved :: MIT License",
   "Topic :: Software Development :: Libraries",
 ]
 
-# No runtime deps needed for a schemas package (leave empty unless you truly need some)
 dependencies = []
 
 [project.urls]
@@ -25,7 +23,6 @@ Homepage = "https://github.com/civic-interconnect/civic-transparency-spec"
 Repository = "https://github.com/civic-interconnect/civic-transparency-spec"
 Documentation = "https://civic-interconnect.github.io/civic-transparency-spec/latest/"
 
-# --- Optional extras (install with: pip install .[dev] or .[docs] etc.) ---
 [project.optional-dependencies]
 docs = [
   "mkdocs",
@@ -60,11 +57,12 @@ dev = [
 [tool.setuptools]
 package-dir = { "" = "src" }
 include-package-data = true
+license-files = ["LICENSE*", "COPYING*", "NOTICE*"]
 
-# Include the JSON schema files in the wheel
 [tool.setuptools.package-data]
-"ci.transparency.spec.schemas" = ["*.json"]
+"ci.transparency.spec.schemas" = ["*.json", "*.yaml"]
 
 [tool.setuptools_scm]
+write_to = "src/ci/transparency/spec/_version.py"
 version_scheme = "guess-next-dev"
 local_scheme = "no-local-version"

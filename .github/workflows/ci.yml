@@ -1,5 +1,4 @@
 # .github/workflows/ci.yml
-# This workflow runs on every push and pull request to the main branch.
 name: Civic Transparency Spec CI
 
 on:
@@ -36,19 +35,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e ".[dev]"
 
-      # Lint
       - name: Ruff lint
         run: ruff check .
 
-      # Validate schemas 
       - name: Validate JSON Schemas (Draft-07)
         run: python .github/scripts/validate_schemas.py
 
-      # Validate OpenAPI (reads local file; no network $id)
       - name: Validate OpenAPI
         run: python .github/scripts/validate_open_api.py
 
-      - name: Run tests
+      - name: Run tests (with coverage XML for local use)
         run: pytest -q --cov --cov-report=xml
 
       - name: Build docs (sanity check)

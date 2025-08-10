@@ -5,7 +5,6 @@ import json
 import re
 from typing import List, Tuple
 
-
 # Prefer validate_spec if available; fall back to validate()
 try:
     from openapi_spec_validator import validate_spec as _validate
@@ -43,7 +42,13 @@ else:
 
 # 2) Find OpenAPI file (src first, fallback to legacy path)
 CANDIDATES = [
-    ROOT / "src" / "ci" / "transparency" / "spec" / "schemas" / "transparency_api.openapi.yaml",
+    ROOT
+    / "src"
+    / "ci"
+    / "transparency"
+    / "spec"
+    / "schemas"
+    / "transparency_api.openapi.yaml",
     ROOT / "spec" / "schemas" / "transparency_api.openapi.yaml",
 ]
 openapi_path = next((p for p in CANDIDATES if p.is_file()), None)

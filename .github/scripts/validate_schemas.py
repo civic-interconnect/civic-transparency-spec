@@ -14,7 +14,6 @@ SCHEMA_DIRS = [
 ]
 
 
-
 schema_files: List[str] = []
 for d in SCHEMA_DIRS:
     schema_files.extend(glob.glob(str(d / "*.schema.json")))
