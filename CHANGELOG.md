@@ -12,6 +12,13 @@ and this project adheres to **[Semantic Versioning](https://semver.org/spec/v2.0
 
 ---
 
+## [0.1.1] - 2025-08-10
+
+### Fixed
+- **OpenAPI/CI:** Use non-network $id in schemas.
+
+---
+
 ## [0.1.0] - 2025-08-10
 
 ### Changed
@@ -97,7 +104,8 @@ and this project adheres to **[Semantic Versioning](https://semver.org/spec/v2.0
 - Versions are driven by git tags via `setuptools_scm`. Tag `vX.Y.Z` to release.
 - Docs are deployed per version tag and aliased to **latest**.
 
-[Unreleased]: https://github.com/civic-interconnect/civic-transparency-spec/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/civic-interconnect/civic-transparency-spec/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/civic-interconnect/civic-transparency-spec/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/civic-interconnect/civic-transparency-spec/compare/v0.0.6...v0.1.0
 [0.0.6]: https://github.com/civic-interconnect/civic-transparency-spec/compare/v0.0.5...v0.0.6
 [0.0.5]: https://github.com/civic-interconnect/civic-transparency-spec/compare/v0.0.4...v0.0.5

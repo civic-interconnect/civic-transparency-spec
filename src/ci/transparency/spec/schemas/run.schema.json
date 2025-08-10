@@ -1,6 +1,7 @@
 {
-  "$id": "https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/run.schema.json",
+  "$id": "run.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema#",
+  "x-canonical": "https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/run.schema.json",
   "title": "RunDoc",
   "description": "Environment and build metadata captured at generation time (useful for provenance, debugging, and reproducibility).",
   "$defs": {

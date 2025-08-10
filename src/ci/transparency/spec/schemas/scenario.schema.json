@@ -1,6 +1,7 @@
 {
-  "$id": "https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/scenario.schema.json",
+  "$id": "scenario.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema#",
+  "x-canonical": "https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/scenario.schema.json",
   "title": "ScenarioYaml",
   "description": "Input scenario used to drive simulations or aggregation runs: topic, window, personas, and optional events.",
   "$defs": {

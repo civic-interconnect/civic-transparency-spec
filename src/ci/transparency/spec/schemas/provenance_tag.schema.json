@@ -1,6 +1,7 @@
 {
+  "$id": "provenance_tag.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/provenance_tag.schema.json",
+  "x-canonical": "https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/provenance_tag.schema.json",
   "title": "Provenance Tag",
   "description": "Per-post provenance tags in the Civic Transparency standard. Values are bucketed/categorical—no PII or direct identifiers.",
   "$defs": {

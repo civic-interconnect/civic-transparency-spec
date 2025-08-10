@@ -2,7 +2,7 @@
 openapi: 3.1.0
 info:
   title: Civic Transparency API
-  version: "0.1.0"
+  version: "0.1.1"
   summary: Aggregated, privacy-preserving behavior signals for a topic/time window.
   description: |
     This OpenAPI file is **normative** for the HTTP interface. Response bodies
