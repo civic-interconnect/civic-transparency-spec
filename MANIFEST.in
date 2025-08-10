@@ -1,3 +1,19 @@
-include README.md LICENSE* pyproject.toml
-graft src/ci/transparency/spec/schemas
-global-exclude *.py[cod] __pycache__ *.DS_Store
+# MANIFEST.in — keep the sdist lean
+
+# Core project files
+include LICENSE
+include README.md
+include pyproject.toml
+
+# Package code + data
+graft src/ci/transparency/spec
+recursive-include src/ci/transparency/spec/schemas *.json *.yaml
+
+# Exclude non-distribution directories
+prune .github
+prune docs
+prune site
+prune tests
+
+# Exclude misc config/artifacts
+exclude .editor.config .gitattributes .gitignore .pre-commit-config.yaml coverage.xml mkdocs.yml

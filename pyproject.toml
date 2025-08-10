@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=69", "wheel", "setuptools-scm[toml]>=8"]
+requires = ["setuptools>=77", "wheel", "setuptools-scm[toml]>=8"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -7,12 +7,16 @@ name = "civic-transparency-spec"
 dynamic = ["version"]
 description = "Civic Transparency specification schemas (JSON Schema Draft-07)"
 readme = "README.md"
-license = "MIT"
+license = "MIT" 
+license-files = ["LICENSE*"]
+
 requires-python = ">=3.11"
 authors = [{ name = "Civic Interconnect" }]
 keywords = ["civic", "transparency", "jsonschema", "specification"]
 classifiers = [
   "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.11",
   "Topic :: Software Development :: Libraries",
 ]
 
@@ -51,16 +55,18 @@ dev = [
   "ruff",
   "build",
   "jsonschema",
-  "openapi-spec-validator"
+  "openapi-spec-validator",
 ]
 
 [tool.setuptools]
 package-dir = { "" = "src" }
 include-package-data = true
-license-files = ["LICENSE*", "COPYING*", "NOTICE*"]
 
 [tool.setuptools.package-data]
-"ci.transparency.spec.schemas" = ["*.json", "*.yaml"]
+"ci.transparency.spec" = ["schemas/*.json", "schemas/*.yaml"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [tool.setuptools_scm]
 write_to = "src/ci/transparency/spec/_version.py"

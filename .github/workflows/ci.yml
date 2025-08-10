@@ -38,12 +38,6 @@ jobs:
       - name: Ruff lint
         run: ruff check .
 
-      - name: Validate JSON Schemas (Draft-07)
-        run: python .github/scripts/validate_schemas.py
-
-      - name: Validate OpenAPI
-        run: python .github/scripts/validate_open_api.py
-
       - name: Run tests (with coverage XML for local use)
         run: pytest -q --cov --cov-report=xml
 

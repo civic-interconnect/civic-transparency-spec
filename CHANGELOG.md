@@ -12,6 +12,24 @@ and this project adheres to **[Semantic Versioning](https://semver.org/spec/v2.0
 
 ---
 
+## [0.1.2] - 2025-08-10
+
+### Changed
+- **Packaging:** Adopt SPDX license string (`project.license = "MIT"`) and `project.license-files = ["LICENSE*"]`.  
+- **Packaging:** Trim **sdist** using `MANIFEST.in` (exclude `.github/`, `docs/`, `site/`, `tests/`, etc.); **wheel** continues to include only package + schemas.
+- **Packaging:** Ensure schema assets are bundled via `tool.setuptools.package-data` (`schemas/*.json`, `schemas/*.yaml`).
+- **Build:** Bump `build-system` to `setuptools>=77` and keep `setuptools-scm[toml]>=8`.  
+
+### Fixed
+- **CI:** Harden validation to be fully offline:
+  - Enforce **non-network** `$id` in all schemas.
+  - OpenAPI validator locates the spec locally and resolves **relative** `$ref`s.
+- **CI:** Remove Codecov upload to due to external calls/cost.
+
+> Note: No schema shape changes.
+
+---
+
 ## [0.1.1] - 2025-08-10
 
 ### Fixed
@@ -104,7 +122,8 @@ and this project adheres to **[Semantic Versioning](https://semver.org/spec/v2.0
 - Versions are driven by git tags via `setuptools_scm`. Tag `vX.Y.Z` to release.
 - Docs are deployed per version tag and aliased to **latest**.
 
-[Unreleased]: https://github.com/civic-interconnect/civic-transparency-spec/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/civic-interconnect/civic-transparency-spec/compare/v0.1.2...HEAD  
+[0.1.2]: https://github.com/civic-interconnect/civic-transparency-spec/compare/v0.1.1...v0.1.2  
 [0.1.1]: https://github.com/civic-interconnect/civic-transparency-spec/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/civic-interconnect/civic-transparency-spec/compare/v0.0.6...v0.1.0
 [0.0.6]: https://github.com/civic-interconnect/civic-transparency-spec/compare/v0.0.5...v0.0.6

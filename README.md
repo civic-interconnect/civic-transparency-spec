@@ -86,7 +86,44 @@ See: [Transparency API](https://civic-interconnect.github.io/civic-transparency-
 
 ---
 
+## Project Organization
+
+## Project layout & where to find things
+
+```text
+civic-transparency-spec/
+├─ .github/workflows/             # CI, release, docs
+├─ docs/
+│  └─ en/
+│     ├─ index.md                 # docs homepage
+│     ├─ docs/                    # narrative docs
+│     │  ├─ all.md                # integrated 1-pager
+│     │  ├─ glossary.md
+│     │  ├─ governance.md
+│     │  ├─ metrics.md
+│     │  ├─ privacy.md
+│     │  └─ survey.md
+│     └─ specs/                   # spec explainer pages
+│        ├─ provenance_tag.md
+│        ├─ schema_index.md
+│        └─ transparency_api.md
+├─ src/
+│  └─ ci/transparency/spec/
+│     ├─ __init__.py
+│     └─ schemas/                 # canonical JSON Schemas + OpenAPI (shipped in the wheel)
+│        ├─ meta.schema.json
+│        ├─ provenance_tag.schema.json
+│        ├─ run.schema.json
+│        ├─ scenario.schema.json
+│        ├─ series.schema.json
+│        └─ transparency_api.openapi.yaml
+├─ tests/                         # schema + OpenAPI validation tests
+├─ mkdocs.yml                     # Set up MkDocs
+└─ pyproject.toml                 # packaging config (schemas included via package-data)
+
+
+---
+
 ## About
 
 Civic Transparency is an open specification for privacy-preserving, non-partisan visibility into **how** content spreads online (not what it says). 
- 
