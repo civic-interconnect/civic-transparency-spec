@@ -45,13 +45,6 @@ jobs:
       - name: Build HTML coverage and upload
         if: always()
         run: coverage html
-        
-      - name: Upload coverage HTML
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: htmlcov
-          path: htmlcov
 
       - name: Upload coverage XML
         uses: actions/upload-artifact@v4
