@@ -33,15 +33,15 @@ jobs:
       - name: Print build version for logs
         run: echo "Building version ${{ steps.ver.outputs.plain }}"
 
-      # Install test deps and the package (NOT editable) with the pinned version
+      # Install test, validate deps and the package (NOT editable) with the pinned version
       # pip installing the project triggers a PEP 517 build; we pass PRETEND_VERSION
       # so setuptools_scm produces an exact X.Y.Z instead of X.Y.Z.dev0
-      - name: Install test deps & project (non-editable, exact version)
+      - name: Install test, validate deps & project (non-editable, exact version)
         env:
           SETUPTOOLS_SCM_PRETEND_VERSION: ${{ steps.ver.outputs.plain }}
         run: |
           python -m pip install --upgrade pip
-          pip install ".[test]"
+          pip install ".[test, validate]"
 
       - name: Run tests (include any validation and coverage)
         run: pytest -q
@@ -78,8 +78,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write  # allow mike to push to gh-pages
+
     steps:
-      - name: Checkout (full history)
+      - name: Checkout (full history) # so setuptools_scm can see tags
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
