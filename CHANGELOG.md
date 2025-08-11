@@ -12,6 +12,24 @@ and this project adheres to **[Semantic Versioning](https://semver.org/spec/v2.0
 
 ---
 
+## [0.1.4] - 2025-08-10
+
+### Added
+- **CI:** `list_artifacts.py` to print packaged schemas/OpenAPI files from wheels.
+- **CI:** Coverage summary in job log; upload `coverage.xml` and HTML report as artifacts.
+
+### Changed
+- **Workflows:** Move coverage generation/upload to **CI** only; keep **release** job lean.
+- **Tests:** Consolidate pytest flags into `pyproject.toml` (`[tool.pytest.ini_options]`) for consistent local/CI runs.
+
+### Fixed
+- **OpenAPI test:** Offline validation of `./series.schema.json` by passing `base_uri`; added step-by-step diagnostics to make failures obvious.
+- **Release:** Ensure GitHub Release is created and artifacts (sdist/wheel) are attached automatically.
+
+> No schema or API changes in this release.
+
+---
+
 ## [0.1.3] - 2025-08-10
 
 ### Fixed
@@ -129,7 +147,9 @@ and this project adheres to **[Semantic Versioning](https://semver.org/spec/v2.0
 - Versions are driven by git tags via `setuptools_scm`. Tag `vX.Y.Z` to release.
 - Docs are deployed per version tag and aliased to **latest**.
 
-[Unreleased]: https://github.com/civic-interconnect/civic-transparency-spec/compare/v0.1.2...HEAD  
+[Unreleased]: https://github.com/civic-interconnect/civic-transparency-spec/compare/v0.1.4...HEAD  
+[0.1.4]: https://github.com/civic-interconnect/civic-transparency-spec/compare/v0.1.3...v0.1.4  
+[0.1.3]: https://github.com/civic-interconnect/civic-transparency-spec/compare/v0.1.2...v0.1.3  
 [0.1.2]: https://github.com/civic-interconnect/civic-transparency-spec/compare/v0.1.1...v0.1.2  
 [0.1.1]: https://github.com/civic-interconnect/civic-transparency-spec/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/civic-interconnect/civic-transparency-spec/compare/v0.0.6...v0.1.0

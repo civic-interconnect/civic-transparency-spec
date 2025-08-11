@@ -39,7 +39,7 @@ docs = [
   "mike",
 ]
 test = ["pytest", "pytest-cov"]
-lint = ["ruff"]
+lint = ["ruff", "pre-commit"]
 build = ["build"]
 validate = ["jsonschema", "openapi-spec-validator"]
 
@@ -54,6 +54,7 @@ dev = [
   "pytest",
   "pytest-cov",
   "ruff",
+  "pre-commit",
   "build",
   "jsonschema",
   "openapi-spec-validator",
@@ -73,3 +74,8 @@ where = ["src"]
 write_to = "src/ci/transparency/spec/_version.py"
 version_scheme = "guess-next-dev"
 local_scheme = "no-local-version"
+
+[tool.pytest.ini_options]
+addopts = "-q --cov=ci.transparency.spec --cov-branch --cov-report=term-missing --cov-report=xml --cov-fail-under=85"
+testpaths = ["tests"]
+pythonpath = ["src"]

@@ -39,7 +39,27 @@ jobs:
         run: ruff check .
 
       - name: Run tests (with coverage XML for local use)
-        run: pytest -q --cov --cov-report=xml
+        run: pytest -q
+
+      - name: Generate coverage summary
+        if: always()
+        run: python .github/scripts/coverage_summary.py
 
       - name: Build docs (sanity check)
         run: mkdocs build
+
+      - name: Build HTML coverage and upload
+        if: always()
+        run: coverage html
+      - name: Upload coverage HTML
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: htmlcov
+          path: htmlcov
+
+      - name: Upload coverage XML
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-xml
+          path: coverage.xml
