@@ -35,7 +35,7 @@ Choose one:
 
 ```bash
 pip install civic-transparency-spec
-pip install civic-transparency-spec==0.0.2
+pip install civic-transparency-spec==0.1.5
 ```
 
 ## Quick start (validate with JSON Schema)

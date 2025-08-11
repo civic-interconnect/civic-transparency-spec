@@ -1,20 +1,21 @@
 # .github/workflows/release.yml
-name: CT Spec Release (PyPI + GH Release + versioned docs)
+name: CT Spec Release (GH Release + PyPI + versioned docs)
 
 on:
   push:
     tags:
-      - "v*.*.*"
+      - "v*.*.*"  # trigger only on version tags like v0.1.4
 
 permissions:
-  contents: write   # needed to create the GitHub Release + upload assets
-  id-token: write   # needed for PyPI Trusted Publishing
+  contents: write   # create the GitHub Release + push gh-pages in docs job
+  id-token: write   # PyPI Trusted Publishing (OIDC)
 
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout with full history
+      - name: Checkout (full history) # so setuptools_scm can see tags
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -24,12 +25,33 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install build tooling
+      - name: Extract plain version from tag (no leading `v`)
+        id: ver
+        shell: bash
+        run: echo "plain=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Print build version for logs
+        run: echo "Building version ${{ steps.ver.outputs.plain }}"
+
+      # Install test deps and the package (NOT editable) with the pinned version
+      # pip installing the project triggers a PEP 517 build; we pass PRETEND_VERSION
+      # so setuptools_scm produces an exact X.Y.Z instead of X.Y.Z.dev0
+      - name: Install test deps & project (non-editable, exact version)
+        env:
+          SETUPTOOLS_SCM_PRETEND_VERSION: ${{ steps.ver.outputs.plain }}
         run: |
           python -m pip install --upgrade pip
-          pip install build
+          pip install ".[test]"
 
-      - name: Build sdist + wheel
+      - name: Run tests (include any validation and coverage)
+        run: pytest -q
+
+      - name: Install build tooling
+        run: pip install build
+
+      - name: Build sdist + wheel (exact version)
+        env:
+          SETUPTOOLS_SCM_PRETEND_VERSION: ${{ steps.ver.outputs.plain }}
         run: python -m build
 
       - name: List artifacts
@@ -38,7 +60,7 @@ jobs:
       - name: Create GitHub Release + upload artifacts
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.ref_name }}   # e.g., v0.1.3
+          tag_name: ${{ github.ref_name }}  # e.g., v0.1.4
           name: ${{ github.ref_name }}
           generate_release_notes: true
           files: |
@@ -55,9 +77,9 @@ jobs:
     needs: build-and-publish
     runs-on: ubuntu-latest
     permissions:
-      contents: write    # allow mike to push to gh-pages
+      contents: write  # allow mike to push to gh-pages
     steps:
-      - name: Checkout with full history
+      - name: Checkout (full history)
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -67,10 +89,10 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install docs deps (from extras)
+      - name: Install docs deps (from extras, non-editable)
         run: |
           python -m pip install --upgrade pip
-          pip install -e ".[docs]"
+          pip install ".[docs]"
 
       - name: Configure git for mike
         run: |
@@ -84,9 +106,10 @@ jobs:
       - name: Build docs (fail fast)
         run: mkdocs build
 
-      - name: Deploy versioned docs with Mike
+      - name: Deploy versioned docs with Mike & set latest
         env:
-          TAG: ${{ github.ref_name }}   #  e.g., v0.1.4
+          TAG: ${{ github.ref_name }}   # e.g., v0.1.4
         run: |
-          VERSION="${TAG#v}"            # 0.1.4
+          VERSION="${TAG#v}"            # strip leading 'v'
           mike deploy --push --update-aliases latest "$VERSION"
+          mike set-default --push latest

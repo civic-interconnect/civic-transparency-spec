@@ -13,7 +13,7 @@ Our goals are clarity, privacy-by-design, and low friction for collaborators.
 - **Spec**: Propose changes to the spec text, normative notes, or privacy language.
 - **Schemas**: Add or adjust JSON Schemas or the OpenAPI file in `src/ci/transparency/spec/schemas/`.
 - **CWEs**: Contribute new transparency pitfalls under `docs/en/docs/cwe/`.
-- 
+
 ---
 
 ## Ground Rules

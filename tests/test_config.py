@@ -13,11 +13,12 @@ def any_schema_dir():
             return p
     raise RuntimeError(f"No schema dir found. Tried: {SRC_SCHEMAS}, {LEGACY_SCHEMAS}")
 
+
 def test_schema_dir_exists():
     p = any_schema_dir()
-    assert p.is_dir(), f"Schema dir {p} does not exist"     
+    assert p.is_dir(), f"Schema dir {p} does not exist"
     files = list(p.glob("*.schema.json"))
     assert files, f"No *.schema.json files found in {p}"
     print(f"Found {len(files)} schema files in {p}")
     for f in files:
-        print(" -", f.name) 
+        print(" -", f.name)

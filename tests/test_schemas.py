@@ -5,7 +5,7 @@ import json
 from importlib.resources import files
 from typing import Iterable, Any
 from jsonschema import Draft7Validator
-from ci.transparency import spec # ensure package is imported for coverage
+from ci.transparency import spec  # ensure package is imported for coverage
 
 
 def _schema_paths() -> Iterable[str]:
@@ -19,9 +19,11 @@ def _schema_paths() -> Iterable[str]:
     ):
         yield str(pkg.joinpath(name))
 
+
 def test_package_imports_for_coverage():
     res: Any = spec
     assert res is not None  # touches the object for ruff
+
 
 def test_json_schemas_are_valid() -> None:
     for schema_path in _schema_paths():

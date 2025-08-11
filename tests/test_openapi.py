@@ -12,7 +12,6 @@ from openapi_spec_validator import validate as osv_validate
 from openapi_spec_validator.readers import read_from_filename
 
 
-
 def _walk_refs(node: Any) -> Iterable[str]:
     """Yield every string value under a '$ref' key (deep)."""
     if isinstance(node, dict):
@@ -45,16 +44,22 @@ def _uri_to_local_path(uri: str) -> Path:
 
 def test_openapi_31_validates_offline() -> None:
     print("\n[STEP 1] Locate OpenAPI YAML from installed package resources")
-    res = files("ci.transparency.spec.schemas").joinpath("transparency_api.openapi.yaml")
+    res = files("ci.transparency.spec.schemas").joinpath(
+        "transparency_api.openapi.yaml"
+    )
     print(f"[resource] {res!r}")
 
-    print("\n[STEP 2] Materialize resource to a real path so the validator can resolve relatives")
+    print(
+        "\n[STEP 2] Materialize resource to a real path so the validator can resolve relatives"
+    )
     with as_file(res) as tmp_path:
         openapi_path = Path(tmp_path).resolve()
         print(f"[openapi path] {openapi_path} (exists={openapi_path.exists()})")
         assert openapi_path.exists(), "OpenAPI YAML not found in installed package!"
 
-        print("\n[STEP 3] Load spec with reader (yields base_uri for resolving './*.schema.json')")
+        print(
+            "\n[STEP 3] Load spec with reader (yields base_uri for resolving './*.schema.json')"
+        )
         spec_dict, base_uri = read_from_filename(str(openapi_path))
         print(f"[base_uri] {base_uri!r}")
 
@@ -81,25 +86,37 @@ def test_openapi_31_validates_offline() -> None:
         sig = str(inspect.signature(osv_validate))
         print(f"[validate signature] validate{sig}")
 
-        print("\n[STEP 8] Validate offline using validate(spec_dict, base_uri=...) ONLY")
+        print(
+            "\n[STEP 8] Validate offline using validate(spec_dict, base_uri=...) ONLY"
+        )
         try:
             osv_validate(spec_dict, base_uri=base_uri)
         except TypeError as te:
             print("[validate] TypeError calling validate(spec_dict, base_uri=...)")
             print(f"           -> {te}")
-            print("           Your installed openapi-spec-validator does not accept 'base_uri'.")
-            print("           ACTION: bump 'openapi-spec-validator' to a version that supports")
-            print("           validate(spec_dict, base_uri=...) OR change your test to pass a")
+            print(
+                "           Your installed openapi-spec-validator does not accept 'base_uri'."
+            )
+            print(
+                "           ACTION: bump 'openapi-spec-validator' to a version that supports"
+            )
+            print(
+                "           validate(spec_dict, base_uri=...) OR change your test to pass a"
+            )
             print("           validator that supports a base URI explicitly.")
             raise
         print("✅ validate(spec_dict, base_uri=...) succeeded offline")
 
-        print("\n✅ All steps passed — local refs resolved & OpenAPI validated offline.")
+        print(
+            "\n✅ All steps passed — local refs resolved & OpenAPI validated offline."
+        )
 
 
 def test_relative_series_schema_exists_next_to_openapi() -> None:
     """Focused guard to catch the './series.schema.json' problem immediately."""
-    res = files("ci.transparency.spec.schemas").joinpath("transparency_api.openapi.yaml")
+    res = files("ci.transparency.spec.schemas").joinpath(
+        "transparency_api.openapi.yaml"
+    )
     with as_file(res) as p:
         openapi_path = Path(p).resolve()
         _, base_uri = read_from_filename(str(openapi_path))

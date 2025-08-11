@@ -2,6 +2,8 @@ site_name: Civic Transparency Spec
 site_description: Specifications and standards for the Civic Transparency project
 site_author: Civic Interconnect
 site_url: https://civic-interconnect.github.io/civic-transparency-spec/
+repo_url: https://github.com/civic-interconnect/civic-transparency-spec
+edit_uri: edit/main/docs/en/
 
 theme:
   name: material
