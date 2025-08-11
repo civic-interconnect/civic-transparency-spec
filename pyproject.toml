@@ -35,6 +35,7 @@ docs = [
   "mkdocs-include-markdown-plugin",
   "mkdocs-git-revision-date-localized-plugin",
   "mkdocs-minify-plugin",
+  "mkdocstrings[python]",
   "mike",
 ]
 test = ["pytest", "pytest-cov"]
