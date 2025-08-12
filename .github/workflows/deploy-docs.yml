@@ -26,14 +26,14 @@ jobs:
           python-version: "3.11"
           cache: "pip"
 
-      - name: Assemble: Install all dev dependencies (non-editable)
+      - name: Assemble. Install all dev dependencies (non-editable)
         run: |
           pip install ".[dev]"
 
-      - name: Deploy: Build docs
+      - name: Deploy. Build docs
         run: mkdocs build
 
-      - name: Deploy: Deploy docs with Mike and set latest
+      - name: Deploy. Deploy docs with Mike and set latest
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"

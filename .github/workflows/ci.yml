@@ -31,23 +31,23 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: "pip"
 
-      - name: Assemble: Install dev deps (extras, non-editable)
+      - name: Assemble. Install dev deps (extras, non-editable)
         run: |
           pip install ".[dev]"
 
-      - name: Baseline: Ruff lint (fail fast, check only, no format or auto-fix in CI)
+      - name: Baseline. Ruff lint (fail fast, check only, no format or auto-fix in CI)
         run: ruff check .
 
-      - name: Baseline: Run tests (include any validation and coverage)
+      - name: Baseline. Run tests (include any validation and coverage)
         run: pytest -q
 
-      - name: Coverage: Generate summary
+      - name: Coverage. Generate summary
         run: python .github/scripts/coverage_summary.py
 
-      - name: Coverage: Build HTML
+      - name: Coverage. Build HTML
         run: coverage html
 
-      - name: Coverage: Combine and Upload Reports
+      - name: Coverage. Combine and Upload Reports
         uses: actions/upload-artifact@v4
         with:
           name: coverage-reports-${{ matrix.python-version }}
@@ -56,6 +56,6 @@ jobs:
             htmlcov/
           overwrite: true
 
-      - name: Deploy: Build docs (sanity check)
+      - name: Deploy. Build docs (sanity check)
         run: mkdocs build
 

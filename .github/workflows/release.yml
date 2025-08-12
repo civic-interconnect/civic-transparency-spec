@@ -29,30 +29,30 @@ jobs:
           python-version: "3.11"
           cache: "pip"
 
-      - name: Versioning: Extract plain version from tag (no leading `v`)
-        iDeploy: ver
+      - name: Versioning. Extract plain version from tag (no leading `v`)
+        id: ver
         shell: bash
         run: echo "plain=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
 
-      - name: Versioning: Print build version for logs
+      - name: Versioning. Print build version for logs
         run: echo "Building version ${{ steps.ver.outputs.plain }}"
 
-      - name: Assemble: Install all dev dependencies (non-editable)
+      - name: Assemble. Install all dev dependencies (non-editable)
         run: |
           pip install ".[dev]"
 
-      - name: Baseline: Run tests (include any validation and coverage)
+      - name: Baseline. Run tests (include any validation and coverage)
         run: pytest -q
 
-      - name: Deploy: Build sdist + wheel (exact version)
+      - name: Deploy. Build sdist + wheel (exact version)
         env:
           SETUPTOOLS_SCM_PRETEND_VERSION: ${{ steps.ver.outputs.plain }}
         run: python -m build
 
-      - name: Deploy: List artifacts
+      - name: Deploy. List artifacts
         run: python .github/scripts/list_artifacts.py
 
-      - name: Deploy: Create GitHub Release, upload artifacts and set as latest
+      - name: Deploy. Create GitHub Release, upload artifacts and set as latest
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}  # e.g., v0.1.4
@@ -65,5 +65,5 @@ jobs:
           prerelease: false
           make_latest: true
 
-      - name: Deploy: Publish to PyPI (Trusted Publishing)
+      - name: Deploy. Publish to PyPI (Trusted Publishing)
         uses: pypa/gh-action-pypi-publish@release/v1
