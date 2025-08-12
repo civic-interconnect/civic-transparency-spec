@@ -7,8 +7,6 @@ edit_uri: edit/main/docs/en/
 
 theme:
   name: material
-  features:
-    - content.footer
   language: en
   favicon: img/favicon.png
   palette:
@@ -16,6 +14,7 @@ theme:
     primary: indigo
     accent: indigo
   features:
+    - content.footer
     - navigation.tabs
     - navigation.top
     - navigation.expand
@@ -23,6 +22,7 @@ theme:
     - navigation.indexes
     - navigation.tracking
     - navigation.tabs.stick
+  copyright: Copyright &copy; 2025 Civic Interconnect
 
 nav:
 - Home: index.md
@@ -35,14 +35,7 @@ nav:
   - Survey: docs/survey.md
   - CWE:
     - Intro: docs/cwe/README.md
-    - CWE-T001: docs/cwe/CWE-T001.md
-    - CWE-T002: docs/cwe/CWE-T002.md
-    - CWE-T003: docs/cwe/CWE-T003.md
-    - CWE-T004: docs/cwe/CWE-T004.md
-    - CWE-T005: docs/cwe/CWE-T005.md
-    - CWE-T006: docs/cwe/CWE-T006.md
-    - CWE-T007: docs/cwe/CWE-T007.md
-    - CWE-T008: docs/cwe/CWE-T008.md
+    - docs/cwe/*.md
 - Specs:
   - Schemas (Index): specs/schema_index.md
   - Provenance Tag: specs/provenance_tag.md
@@ -61,11 +54,19 @@ plugins:
         - locale: en
           default: true
           name: English
-          build: true
   - git-revision-date-localized:
       type: iso_date
       fallback_to_build_date: true
       enable_creation_date: false
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: google
+            show_source: false
+            show_signature: true
+            group_by_category: true
+            filters: ["!^_"]  # hide private members
       
 markdown_extensions:
 - admonition

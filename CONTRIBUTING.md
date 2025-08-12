@@ -22,16 +22,16 @@ Our goals are clarity, privacy-by-design, and low friction for collaborators.
 - **License**: All contributions are accepted under the repo's **MIT License**.
 - **Single Source of Truth**: The normative artifacts are in `src/ci/transparency/spec/schemas/`. Documentation should not contradict these files.
 
-
 ---
 
 ## Before You Start
 
 1. **Open an Issue or Discussion** for non-trivial changes so we can align early.
 2. For **schema changes**, describe:
-   - What you want to change (field, enum, constraints).
-   - Why (use case, privacy impact).
-   - Backward compatibility (breaking or additive).
+
+- What you want to change (field, enum, constraints).
+- Why (use case, privacy impact).
+- Backward compatibility (breaking or additive).
 
 ---
 
@@ -80,6 +80,7 @@ Our goals are clarity, privacy-by-design, and low friction for collaborators.
 ## DEV 1. Start Locally
 
 **Mac/Linux/WSL**
+
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
@@ -89,6 +90,7 @@ pre-commit install
 ```
 
 **Windows (PowerShell)**
+
 ```powershell
 py -3.11 -m venv .venv
 .\.venv\Scripts\activate
@@ -101,7 +103,7 @@ pre-commit install
 
 Run all checks.
 
-```shell
+````shell
 mkdocs build
 pre-commit run --all-files
 pytest -q
@@ -110,7 +112,7 @@ pytest -q
 
 ```bash
 mkdocs serve
-```
+````
 
 Open: <http://127.0.0.1:8000/>
 
@@ -131,7 +133,6 @@ git tag vx.y.z -m "x.y.z"
 git push origin vx.y.z
 ```
 
-> A GitHub Action will **build**, **publish to PyPI** (Trusted Publishing), **create a GitHub Release** with artifacts, and **deploy versioned docs** with `mike`.  
+> A GitHub Action will **build**, **publish to PyPI** (Trusted Publishing), **create a GitHub Release** with artifacts, and **deploy versioned docs** with `mike`.
 
 > You do **not** need to run `gh release create` or upload files manually.
-
