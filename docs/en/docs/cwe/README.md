@@ -1,7 +1,9 @@
 # Common Weakness Enumeration (CWE) Catalog for Transparency
 
-This is an **initial catalog** of common weaknesses in transparency implementations.  
-It will be expanded as real-world platform audits uncover recurring issues.
+This is an **initial CWE catalog** for Civic Transparency implementations.  
+It will grow as real-world platform audits surface recurring design and deployment issues.
+
+Each CWE highlights a common risk in system behavior, privacy, or transparency reliability.
 
 ## CWE Catalog
 

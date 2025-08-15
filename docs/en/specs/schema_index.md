@@ -1,18 +1,25 @@
-# Schema Index (Normative Artifacts)
+# Schema Index (Draft / Normative Artifacts)
 
-This page lists the **canonical, machine-readable schemas** for Civic Transparency.
+This page lists **draft machine-readable schemas** for the Civic Transparency specification.
+
 Human-readable explanations live in:
 - [Provenance Tag](./provenance_tag.md) *(informative)*
 - [Transparency API](./transparency_api.md) *(informative)*
 
-## Guidelines
+---
 
-The schema design emphasizes:
-- **Behavior-only focus**: No message content storage.
-- **Privacy preservation**: All values are bucketed or aggregated.
-- **Extensibility**: Allows adding new metrics or buckets without breaking existing consumers.
+## Design Goals
+
+These schemas prioritize:
+- **Behavior-only scope** – no message content or identifiers.
+- **Privacy preservation** – bucketed values and k-anonymity safeguards.
+- **Forward compatibility** – extensible formats with stable IDs.
+
+---
 
 ## JSON Schema (Draft-07)
+
+Each schema is self-contained and versioned.
 
 - **SeriesDoc**  
   `$id`: `https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/series.schema.json`  
@@ -26,37 +33,45 @@ The schema design emphasizes:
   `$id`: `https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/run.schema.json`  
   File: `spec/schemas/run.schema.json`
 
-- **Provenance Tag**  
+- **ProvenanceTag**  
   `$id`: `https://civic-interconnect.github.io/civic-transparency-spec/en/spec/schemas/provenance_tag.schema.json`  
   File: `spec/schemas/provenance_tag.schema.json`
 
-## OpenAPI (HTTP Interface)
+---
+
+## OpenAPI
 
 - **Transparency API**  
   File: `spec/schemas/transparency_api.openapi.yaml`  
-  Response bodies **MUST** validate against the JSON Schemas above.
+  All responses **must validate** against the JSON Schemas above.
+
+---
 
 ## Versioning & Conformance
 
-- Schemas use **semantic versioning**.  
-  - MAJOR = breaking, MINOR = additive, PATCH = clarifications.  
-- Implementers **MUST** pin to a specific schema version and validate.  
-- Deprecations are announced in `CHANGELOG.md` and tagged releases.
+- Schemas follow **semantic versioning**:  
+  - MAJOR = breaking  
+  - MINOR = additive  
+  - PATCH = clarifying
+- Clients **must pin** to a specific version and validate before ingesting.
+- Changes and deprecations are documented in `CHANGELOG.md`.
+
+---
 
 ## Code Generation (informative)
 
-For typed clients, we recommend generating models from the JSON Schemas.
+You can generate typed clients from the JSON Schemas.
 
 ```bash
-# Example (Python / pydantic) – run in your own repo:
+# Example (Python + Pydantic)
 datamodel-code-generator \
   --input spec/schemas/series.schema.json \
   --input-file-type jsonschema \
   --output src/ci/transparency/types/series.py
 ```
 
-## Provenance & Privacy Notes (pointers)
+## Provenance & Privacy Notes
 
-- Buckets, not PII; behavior-only signals.  
-- Minimum group size (e.g., **k ≥ 100**) enforced at the API.  
-See [Privacy](../docs/privacy.md) for policy details.
+- **Signals only**: All values are behavioral, not textual.
+- **Minimum group size**: Enforced at the API layer (e.g., `k ≥ 100`).
+- **PII-free by design**: See [Privacy](../docs/privacy.md) for details.

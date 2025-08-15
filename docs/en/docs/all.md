@@ -23,10 +23,6 @@
 
 ---
 
-{% include-markdown "docs/governance.md" %}
-
----
-
 {% include-markdown "docs/glossary.md" %}
 
 ---

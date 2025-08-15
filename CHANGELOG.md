@@ -15,6 +15,16 @@ and this project adheres to **[Semantic Versioning](https://semver.org/spec/v2.0
 
 ---
 
+## [0.1.8] - 2025-08-14
+
+### Changed
+
+- **Docs & Metadata:** Refined documentation, cleaned internal references, and improved contributor guidance.
+
+> No schema or API changes in this release.
+
+---
+
 ## [0.1.7] - 2025-08-11
 
 ### Changed
@@ -203,7 +213,8 @@ and this project adheres to **[Semantic Versioning](https://semver.org/spec/v2.0
 - Versions are driven by git tags via `setuptools_scm`. Tag `vX.Y.Z` to release.
 - Docs are deployed per version tag and aliased to **latest**.
 
-[Unreleased]: https://github.com/civic-interconnect/civic-transparency-spec/compare/v0.1.7...HEAD
+[Unreleased]: https://github.com/civic-interconnect/civic-transparency-spec/compare/v0.1.8...HEAD
+[0.1.8]: https://github.com/civic-interconnect/civic-transparency-spec/compare/v0.1.7...v0.1.8
 [0.1.7]: https://github.com/civic-interconnect/civic-transparency-spec/compare/v0.1.6...v0.1.7
 [0.1.6]: https://github.com/civic-interconnect/civic-transparency-spec/compare/v0.1.5...v0.1.6
 [0.1.5]: https://github.com/civic-interconnect/civic-transparency-spec/compare/v0.1.4...v0.1.5

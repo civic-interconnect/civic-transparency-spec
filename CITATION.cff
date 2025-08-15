@@ -6,4 +6,9 @@ authors:
   - name: Civic Interconnect
 repository-code: https://github.com/civic-interconnect/civic-transparency-types
 license: MIT
-
+keywords:
+  - transparency
+  - civic data
+  - json schema
+  - openapi
+  - provenance

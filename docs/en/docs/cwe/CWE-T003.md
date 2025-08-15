@@ -1,13 +1,24 @@
 # CWE-T003: Weak Deduplication Hash or Normalization
 
 ## Description
-Dedup hash uses fragile text/media normalization (e.g., whitespace-only) or weak hashes.
+
+Deduplication hashes may use fragile normalization techniques (e.g., whitespace-only normalization) or rely on weak hash functions.
 
 ## Potential Impact
-- Missed recycled-content spikes; false positives.
+
+- Recycled or near-duplicate content may go undetected.
+- Unstable hashes may cause false positives due to minor formatting changes.
 
 ## Detection
-- Evaluate stability across small text/media variations; test collisions.
+
+- Test hash stability across small variations in text or media.
+- Check for collisions under common transformations (e.g., spacing, emoji variants, URL encodings).
 
 ## Mitigation
-- Normalize robustly (casefolding, URL canonicalization, emoji handling). Use strong rolling or cryptographic hashes.
+
+- Apply robust normalization:
+  - Case folding
+  - URL canonicalization
+  - Emoji and Unicode normalization
+
+- Use strong, collision-resistant hashing techniques (e.g., cryptographic hashes or rolling hashes for long content).

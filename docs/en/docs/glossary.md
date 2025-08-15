@@ -59,10 +59,10 @@ Comprehensive EU privacy regulation. See <https://gdpr.eu/>.
 Network analysis firm mapping coordinated online behavior. See <https://graphika.com/>.
 
 **Institute of Electrical and Electronics Engineers (IEEE)**  
-Professional association and standards body; potential neutral steward for aspects of this specification.
+Professional association and standards body.
 
 **International Organization for Standardization (ISO)**  
-International standards body; potential neutral steward for aspects of this specification.
+International standards body.
 
 **JSON Schema**  
 Machine-readable schema language used here to define `series`, `meta`, `run`, `scenario`, and `provenance_tag`.

@@ -1,158 +1,143 @@
-# Civic Transparency
+# Civic Transparency (Draft)
 
-> **Verified Provenance & Behavior Transparency Standard**  
-> An open, nonpartisan specification for privacy-preserving visibility into how content spreads online.
+> **Provenance & Behavior Transparency**  
+> An exploratory, privacy-respecting framework for understanding how public content spreads online.
 
-- [GitHub Source Repository](https://github.com/civic-interconnect/civic-transparency-spec)
-- [Hosted Documentation](https://civic-interconnect.github.io/civic-transparency-spec/)
+- [GitHub Repository](https://github.com/civic-interconnect/civic-transparency-spec)
+- [Hosted Draft Documentation](https://civic-interconnect.github.io/civic-transparency-spec/)
 
-Official documentation for the Civic Transparency project.
+This site documents **experimental schema drafts** and research ideas under active development.
 
 ---
 
-## Vision
+## Project Vision
 
-Create a low-cost, behavioral early-warning dashboard by:
+Explore the feasibility of a behavioral transparency dashboard that:
 
-- Ingesting publicly available, ToS-compliant data from platforms with usable APIs.
-- Tracking bursts, synchrony, recycled media, and sudden follower spikes without assessing message content.
-- Publishing aggregated event-level signals (e.g., _High coordination spike on Platform X in Topic Y_) instead of targeting individuals.
-- Providing toolkits for journalists, civic groups, and election officials to investigate further.
+- Ingests public, ToS-compliant data from platforms with usable APIs.
+- Surfaces burst activity, coordination, and automation patterns without analyzing post content.
+- Publishes **aggregated behavioral signals** rather than identifying individuals.
+- Offers exploration tools for researchers, journalists, and civic technologists.
 
 ---
 
 ## Motivation
 
-Coordinated manipulation thrives when people can't see how narratives spread or whether automation is involved.
+Online manipulation thrives in opacity.  
+We do **not** judge message content or viewpoints.  
+Instead, we visualize **how** content spreads.
 
-We do **not** judge truth or police viewpoints.  
-Instead, we show how content moves (provenance and behavior) so everyone can evaluate trends on equal footing.
-
-For platform providers, the system uses **low-cost metadata** and aggregated signals, reducing legal risk and operational burden.
-
----
-
-## Proposal
-
-1. Platforms embed **machine-readable provenance tags** in every public post:
-   - Account creation date bucket
-   - Automation flag
-   - Original vs. reshared
-   - Media provenance (if available)
-2. Platforms host a **public transparency endpoint** (low-cost API) that returns aggregate counts of behavior types for a given hashtag, topic, or trend.
-3. Personal accounts are protected:
-   - Broad date ranges instead of exact creation dates
-   - No personal identifiers
-   - Privacy by design
+For platforms, our goal is to use **low-cost metadata** and aggregation methods to minimize operational risk and simplify adoption.
 
 ---
 
-## Benefits for Platforms
+## Exploratory Model
 
-- **Reduced liability.** Transparency data shifts blame to bad actors if manipulation is uncovered.
-- **Trust & brand boost.** Visible commitment to transparency.
-- **Lower moderation costs.** Third parties help detect automation.
-- **Compliance ready.** Aligns with EU DSA and other transparency laws.
+1. **Provenance Tags**  
+   A proposed schema of non-identifying metadata at post time:
+   - Account age bucket  
+   - Reshare flag  
+   - Media reuse flag  
+   - Automation status (if detectable)
 
----
+2. **Transparency Endpoint**  
+   A low-cost, unauthenticated API that platforms could expose:
+   - Input: trend, hashtag, or topic  
+   - Output: anonymized stats by signal type and time range
 
-## Benefits for People
-
-- **Easy public verification.** Check how organic a trend is.
-- **Less disinformation amplification.** Mass coordination is harder to hide.
-- **User choice.** Users can filter feeds based on automation or coordination scores.
-
----
-
-## Core Design Principles
-
-- **Provenance tags** at post creation.
-- **Aggregated behavioral stats** via public API.
-- **Privacy by design.** Use bucketed/ranged values, no personal data, no DMs, no full content export.
+3. **Privacy by Design**
+   - No identifiers or message content
+   - Only aggregated results  
+   - Bucketed metrics (e.g., k ≥ 100)  
+   - No user scoring or permanent identifiers
 
 ---
 
-## Key Aspects
+## Why Might Platforms Participate?
 
-1. Spot abnormal account-age skews.
-2. Flag synchrony spikes and recycled-content bursts without identifying individuals.
-3. Compare automation rates across topics and dates.
-4. Enforce privacy safeguards. Use buckets only, no join keys.
-5. Publish only aggregated outputs (e.g., k-anonymity ≥ 100).
-6. Keep metrics behavioral, not ideological.
-7. Allow appeals & audits.
-8. Document methods openly.
+- **Proactive trust-building.**  
+  Offers visibility without revealing users.
 
-## Costs & Incentives
+- **Low overhead.**  
+  Metadata is computed once; aggregation is lightweight.
 
-- **Low compute cost.** Tags set once; aggregation uses compact counters.
-- **Scalable delivery.** Caching and rate limits for popular queries.
-- **Legal risk reduction.** Transparent, standardized outputs.
-- **Trust dividend.** Benefits regulators, advertisers, and users.
-- **Global fit.** Aligns with transparency mandates like the EU DSA.
-
-## Governance & standardization
-
-- **Neutral steward.** Multi-stakeholder working group.
-- **Versioned spec & model cards.** Changes documented; platforms publish transparency model cards.
-- **Certification tier.** Offer independent audits, SOC 2-style.
+- **Regulatory alignment.**  
+  Potential fit with EU DSA and similar transparency mandates.
 
 ---
 
-## Visibility Boundaries
+## Why It Might Help the Public
 
-**Reveals:** Coordination patterns, automation mix, recycled media rates, account-age skews, provenance quality signals.
-
-**Does NOT reveal:** Exact identities, private messages, sensitive client info, individual posts, or "truth."
-
----
-
-## Risks & Mitigations
-
-- **Actors adapt:** They can age accounts longer.
-
-  - Mitigation: evaluate multiple complementary signals.
-
-- **Topic gaming:** Flood benign posts under a hashtag.
-
-  - Mitigation: multi-query by URL/media hash and anomaly comparison.
-
-- **Chilling concerns:** Users fear being "scored."
-
-  - Mitigation: only aggregates are public; tags used for computation only.
-
-- **Platform under-implementation:**
-  - Mitigation: offer certification and provide public conformity reports.
-
-## Success metrics
-
-- **Short term:** watchdogs and journalists cite coordination metrics in coverage.
-- **Medium term:** fewer high-risk patterns during elections without suppressing organic growth.
-- **Long term:** higher trust metrics and cross-platform adoption.
+- **Fact-checkers and journalists** can analyze trend origin and scale.  
+- **Civic groups** can detect astroturfing or amplification.  
+- **Voters and researchers** gain clarity on coordination dynamics.
 
 ---
 
-## Implementation Plan
+## Design Principles
 
-1. Develop and test on simulated data via GitHub Pages.
-2. Prototype on open platforms (BlueSky, Fediverse, Reddit).
-3. Publish standard + open-source reference implementation.
-4. Pilot on low-stakes topics (sports, entertainment).
-5. Independent audits for fairness and privacy protection.
-6. Engage regulators with cost/benefit evidence.
+- **Behavioral, not ideological.**  
+  No classification of content or users.
+
+- **No centralized authority.**  
+  All methods and signals are open for review and critique.
+
+- **Aggregate-first.**  
+  Computation happens internally; only grouped results are published.
 
 ---
 
-## Read More
+## Areas of Exploration
+
+- Account age skews
+- Reshared/recycled media bursts
+- Hashtag/topic-level automation rates
+- Coordinated posting patterns
+- Platform-agnostic schema and API prototypes
+
+---
+
+## Privacy and Safety
+
+**What this project does NOT do:**
+
+- Reveal individual users, IP addresses, or message content  
+- Classify sentiment, misinformation, or intent  
+- Score users or create reputational data  
+- Interfere with private communications
+
+---
+
+## Risks We Consider
+
+- **Evasion tactics**: actors may adapt  
+  → Combine multiple signals, refine methods
+
+- **Gaming behavior**: flooding or noise  
+  → Multi-modal analysis (e.g., media hashes, URL reuse)
+
+- **Public discomfort**: perceived surveillance  
+  → Keep all outputs non-personal and non-identifying
+
+---
+
+## Exploratory Outcomes (Hypothetical)
+
+- **Short term**: Coordination visualizations inform journalists  
+- **Mid term**: Platforms experiment with test implementations  
+- **Long term**: Shared civic infrastructure to spot manipulation early
+
+---
+
+## More (Draft) Docs
 
 - [Glossary](./docs/glossary.md)
-- [Governance](./docs/governance.md)
 - [Metrics](./docs/metrics.md)
 - [Privacy](./docs/privacy.md)
-- [Survey](./docs/survey.md)
+- [Survey Instrument](./docs/survey.md)
 
-**Specifications:**
+**Draft Schemas and API Designs:**
 
-- [Schemas](./specs/schema_index.md)
-- [Provenance Tag](./specs/provenance_tag.md)
-- [Transparency API](./specs/transparency_api.md)
+- [Schemas Index](./specs/schema_index.md)
+- [Provenance Tag Draft](./specs/provenance_tag.md)
+- [Transparency API Draft](./specs/transparency_api.md)
